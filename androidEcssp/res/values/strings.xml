@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">应急指挥</string> 
+    <string name="action_settings">Settings</string>
+	<string name="welcome_qslyhm">请输入用户名</string>
+	<string name="welcome_qslmm">请输入密码</string>
+	<string name="welcome_jzmm">记住密码</string>
+	<string name="welcome_zddr">自动登录</string>
+	
+</resources>

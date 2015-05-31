@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <LinearLayout   xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"        
+        android:gravity="center"
+        android:orientation="vertical"
+        android:background="@drawable/wgh_login_bj1" > 
+<!-- android:paddingBottom="10.0dp"  -->
+ <RelativeLayout android:background="@drawable/welcome_relaout3"
+            android:id="@+id/RelativeLayout02"
+            android:layout_height="250dp"
+            android:layout_marginLeft="15.0dp"
+            android:layout_marginRight="15.0dp"
+            android:layout_marginTop="160dp"
+            android:layout_width="fill_parent" 
+            android:paddingTop="21.0dp">
+            <ImageView android:background="@drawable/login_head"
+                android:id="@+id/faceImg"
+                android:layout_height="wrap_content" 
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                />
+            <EditText android:background="@drawable/welcome_edit_text"
+                android:hint="@string/welcome_qslyhm"
+                android:textSize="18sp"
+                android:id="@+id/welcome_user_edit"
+                android:layout_alignParentTop="true"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6.0dp"
+                android:layout_marginLeft="5.0dp"
+                android:layout_marginRight="13.0dp"
+                android:layout_marginTop="5.0dp"
+                android:layout_toRightOf="@+id/faceImg"
+                android:layout_width="fill_parent"
+                android:maxLength="20"  
+                android:paddingLeft="5.0sp" 
+                android:saveEnabled="true"
+                android:textColor="#aaa"/>
+          
+            <EditText android:background="@drawable/welcome_edit_text"
+                android:id="@+id/welcome_password_edit"
+                android:hint="@string/welcome_qslmm"
+                android:inputType="textPassword"
+                android:layout_alignLeft="@+id/welcome_user_edit"
+                android:layout_alignRight="@+id/welcome_user_edit"
+                android:layout_below="@+id/welcome_user_edit"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="1.0dip"
+                android:layout_width="wrap_content"
+                android:maxLength="20" 
+                android:paddingLeft="5.0sp" 
+                android:saveEnabled="true"
+                android:textColor="#aaa"/>
+            
+           <LinearLayout 
+               android:id="@+id/welcome_layout_check"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_below="@id/welcome_password_edit"
+               android:layout_alignRight="@id/welcome_password_edit"
+               android:paddingTop="5dp"
+               android:layout_alignLeft="@id/welcome_password_edit"
+               android:orientation="horizontal"> 
+               <CheckBox
+                android:id="@+id/welcom_checkbox_jzmm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:textColor="#888"
+                android:text="@string/welcome_jzmm"
+                android:textSize="14sp" />
+				<CheckBox
+                android:id="@+id/welcom_checkbox_zddr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:textColor="#888"
+                android:text="@string/welcome_zddr"
+                android:textSize="14sp" />
+               </LinearLayout> 
+           <LinearLayout android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_below="@id/welcome_layout_check"
+               android:layout_alignRight="@id/welcome_password_edit"
+               android:paddingTop="10dp"
+               android:layout_alignLeft="@id/welcome_password_edit"
+               android:layout_marginBottom="20dp">
+               <Button android:id="@+id/welcome_login_btn"  
+                android:layout_height="40dp" 
+                android:layout_width="wrap_content"   
+                android:layout_marginTop="7.0px" 
+                android:layout_weight="1"
+                android:background="@drawable/welcome_btn_login"
+                android:onClick="welcomelogin" /> 
+            </LinearLayout>
+        </RelativeLayout> 
+    </LinearLayout>

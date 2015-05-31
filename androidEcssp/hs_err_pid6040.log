@@ -1,0 +1,108 @@
+#
+# An unexpected error has been detected by Java Runtime Environment:
+#
+#  Internal Error (classFileParser.cpp:2923), pid=6040, tid=4088
+#  Error: ShouldNotReachHere()
+#
+# Java VM: Java HotSpot(TM) Client VM (11.0-b15 mixed mode windows-x86)
+# If you would like to submit a bug report, please visit:
+#   http://java.sun.com/webapps/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x003c9400):  JavaThread "Unknown thread" [_thread_in_vm, id=4088, stack(0x00430000,0x00480000)]
+
+Stack: [0x00430000,0x00480000]
+
+[error occurred during error reporting (printing native stack), id 0xc0000005]
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+
+Other Threads:
+
+=>0x003c9400 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=4088, stack(0x00430000,0x00480000)]
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Dynamic libraries:
+0x00400000 - 0x00424000 	D:\eclipse\adt-bundle-windows-x86-20131030\eclipse\jre\bin\javaw.exe
+0x77370000 - 0x774de000 	C:\windows\SYSTEM32\ntdll.dll
+0x74ee0000 - 0x75020000 	C:\windows\SYSTEM32\KERNEL32.DLL
+0x74ca0000 - 0x74d77000 	C:\windows\SYSTEM32\KERNELBASE.dll
+0x72710000 - 0x727b0000 	C:\windows\system32\apphelp.dll
+0x5a950000 - 0x5abb6000 	C:\windows\AppPatch\AcGenral.DLL
+0x75d70000 - 0x75e33000 	C:\windows\SYSTEM32\msvcrt.dll
+0x75e40000 - 0x75e81000 	C:\windows\SYSTEM32\sechost.dll
+0x74b70000 - 0x74b8e000 	C:\windows\SYSTEM32\SspiCli.dll
+0x75bf0000 - 0x75c35000 	C:\windows\SYSTEM32\SHLWAPI.dll
+0x72960000 - 0x72a4d000 	C:\windows\SYSTEM32\UxTheme.dll
+0x74d80000 - 0x74ed3000 	C:\windows\SYSTEM32\USER32.dll
+0x77140000 - 0x7724e000 	C:\windows\SYSTEM32\GDI32.dll
+0x74730000 - 0x74753000 	C:\windows\SYSTEM32\WINMM.dll
+0x73ca0000 - 0x73cb3000 	C:\windows\SYSTEM32\samcli.dll
+0x75c40000 - 0x75d68000 	C:\windows\SYSTEM32\ole32.dll
+0x750e0000 - 0x75175000 	C:\windows\SYSTEM32\OLEAUT32.dll
+0x651a0000 - 0x651b7000 	C:\windows\SYSTEM32\MSACM32.dll
+0x74780000 - 0x74788000 	C:\windows\SYSTEM32\VERSION.dll
+0x75e90000 - 0x7713c000 	C:\windows\SYSTEM32\SHELL32.dll
+0x74ae0000 - 0x74afb000 	C:\windows\SYSTEM32\USERENV.dll
+0x709b0000 - 0x709ca000 	C:\windows\SYSTEM32\dwmapi.dll
+0x73180000 - 0x732ca000 	C:\windows\SYSTEM32\urlmon.dll
+0x74b90000 - 0x74c0c000 	C:\windows\SYSTEM32\ADVAPI32.dll
+0x72a50000 - 0x72ab5000 	C:\windows\SYSTEM32\WINSPOOL.DRV
+0x63f30000 - 0x63f46000 	C:\windows\SYSTEM32\MPR.dll
+0x756d0000 - 0x7578a000 	C:\windows\SYSTEM32\RPCRT4.dll
+0x74b60000 - 0x74b6a000 	C:\windows\SYSTEM32\CRYPTBASE.dll
+0x75820000 - 0x7599d000 	C:\windows\SYSTEM32\combase.dll
+0x743c0000 - 0x743e3000 	C:\windows\SYSTEM32\WINMMBASE.dll
+0x74720000 - 0x7472f000 	C:\windows\SYSTEM32\profapi.dll
+0x744e0000 - 0x74712000 	C:\windows\SYSTEM32\iertutil.dll
+0x747b0000 - 0x74983000 	C:\windows\SYSTEM32\WININET.dll
+0x74b00000 - 0x74b54000 	C:\windows\SYSTEM32\bcryptPrimitives.dll
+0x751b0000 - 0x751ec000 	C:\windows\SYSTEM32\cfgmgr32.dll
+0x74390000 - 0x743b1000 	C:\windows\SYSTEM32\DEVOBJ.dll
+0x74300000 - 0x7438b000 	C:\windows\SYSTEM32\SHCORE.DLL
+0x75180000 - 0x751a7000 	C:\windows\system32\IMM32.DLL
+0x753f0000 - 0x75502000 	C:\windows\SYSTEM32\MSCTF.dll
+0x7c340000 - 0x7c396000 	D:\eclipse\adt-bundle-windows-x86-20131030\eclipse\jre\bin\msvcr71.dll
+0x6d8b0000 - 0x6db06000 	D:\eclipse\adt-bundle-windows-x86-20131030\eclipse\jre\bin\client\jvm.dll
+0x6d330000 - 0x6d338000 	D:\eclipse\adt-bundle-windows-x86-20131030\eclipse\jre\bin\hpi.dll
+0x753e0000 - 0x753e6000 	C:\windows\SYSTEM32\PSAPI.DLL
+0x6d860000 - 0x6d86c000 	D:\eclipse\adt-bundle-windows-x86-20131030\eclipse\jre\bin\verify.dll
+0x6d3d0000 - 0x6d3ef000 	D:\eclipse\adt-bundle-windows-x86-20131030\eclipse\jre\bin\java.dll
+0x6d8a0000 - 0x6d8af000 	D:\eclipse\adt-bundle-windows-x86-20131030\eclipse\jre\bin\zip.dll
+
+VM Arguments:
+jvm_args: -Dfile.encoding=GBK -Xbootclasspath:D:\eclipse\adt-bundle-windows-x86-20131030\sdk\platforms\android-19\android.jar 
+java_command: encryption.EncryptUtil
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=C:\Program Files (x86)\Java\jdk1.8.0_20
+CLASSPATH=C:\Program Files (x86)\Java\jdk1.8.0_20\lib
+PATH=D:/eclipse/adt-bundle-windows-x86-20131030/eclipse/jre/bin/client;D:/eclipse/adt-bundle-windows-x86-20131030/eclipse/jre/bin;D:/eclipse/adt-bundle-windows-x86-20131030/eclipse/jre/lib/i386;E:\app\EVECOM-PC\product\11.2.0\dbhome_1\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Common Files\lenovo\easyplussdk\bin;C:\ProgramData\Lenovo\ReadyApps;D:\SVN\bin;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files (x86)\Java\jdk1.8.0_20\bin;D:\eclipse\adt-bundle-windows-x86-20131030\eclipse;
+USERNAME=EVECOM-PC
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 60 Stepping 3, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows NT 6.2 Build 9200 
+
+CPU:total 4 (8 cores per cpu, 2 threads per core) family 6 model 12 stepping 3, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, ht
+
+Memory: 4k page, physical 4082312k(470240k free), swap 4194303k(2612504k free)
+
+vm_info: Java HotSpot(TM) Client VM (11.0-b15) for windows-x86 JRE (1.6.0_10-rc2-b32), built on Sep 12 2008 00:52:11 by "java_re" with MS VC++ 7.1
+
+time: Wed May 20 09:43:02 2015
+elapsed time: 0 seconds
+
