@@ -17,6 +17,30 @@
     <String>password</String>
     <StringDoc>密码</StringDoc>
     </get>
+        <get>
+    <String>userid</String>
+    <StringDoc>用户id</StringDoc>
+    </get>
+        <get>
+    <String>usernameCN</String>
+    <StringDoc>用户中文名</StringDoc>
+    </get>
+        <get>
+    <String>sex</String>
+    <StringDoc>用户性别</StringDoc>
+    </get>
+        <get>
+    <String>mobile_In_clound</String>
+    <StringDoc>服务器数据库中电话号码</StringDoc>
+    </get>
+        <get>
+    <String>orgid</String>
+    <StringDoc>组织机构id</StringDoc>
+    </get>
+        <get>
+    <String>orgname</String>
+    <StringDoc>组织机构名称</StringDoc>
+    </get>
 </item>
 
 

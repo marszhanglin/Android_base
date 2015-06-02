@@ -17,6 +17,42 @@
     <String>password</String>
     <StringDoc>密码</StringDoc>
     </get>
+        <get>
+    <String>userid</String>
+    <StringDoc>用户id</StringDoc>
+    </get>
+        <get>
+    <String>usernameCN</String>
+    <StringDoc>用户中文名</StringDoc>
+    </get>
+        <get>
+    <String>sex</String>
+    <StringDoc>用户性别</StringDoc>
+    </get>
+        <get>
+    <String>mobile_In_clound</String>
+    <StringDoc>服务器数据库中电话号码</StringDoc>
+    </get>
+        <get>
+    <String>orgid</String>
+    <StringDoc>组织机构id</StringDoc>
+    </get>
+        <get>
+    <String>orgname</String>
+    <StringDoc>组织机构名称</StringDoc>
+    </get>
+    <map>
+    <string name="mobile_In_clound">13850159482</string>
+    <string name="usernameCN">超级管理员</string>
+    <string name="sex">男</string>
+    <string name="rembernp">1</string>
+    <string name="username">sysadmin</string>
+    <string name="orgid">root</string>
+    <string name="orgname">福建省政府</string>
+    <string name="userid">a382eba16e9a41f9b7377ad760215357</string>
+    <string name="autologin">1</string>
+    <string name="password">888888</string>
+</map>
 </item>
 
 
