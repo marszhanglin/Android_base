@@ -16,10 +16,12 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.util.EntityUtils;
 
 import net.evecom.androidecssp.R;
+import net.evecom.androidecssp.util.HttpUtil;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -110,14 +112,7 @@ public class BaseActivity extends Activity {
     
     /**
      * 
-     * @param http  post«Î«Û
-     * @return
-     * @throws IOException
-     * @throws ClientProtocolException
-     */ 
-    /**
-     * 
-     * @param strUrl   http://localhost:8080/ecssp/jfs/mobile/androidIndex/login
+     * @param strUrl   /jfs/mobile/androidIndex/login
      * @param entity_str   username=sysadmin&password=D860103725C09C63BFDFB0D6962EC1AB&imei=null
      * @return
      * @throws ClientProtocolException
@@ -126,7 +121,7 @@ public class BaseActivity extends Activity {
     public String connServerForResultPost(String strUrl, String entity_str) throws ClientProtocolException,
             IOException {
         String strResult = "";
-        URL url = new URL(strUrl);
+        URL url = new URL(HttpUtil.getPCURL(getApplicationContext()) +strUrl);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         byte[] entity = entity_str.getBytes();
@@ -145,5 +140,10 @@ public class BaseActivity extends Activity {
             strResult = buffer.toString();
         }
         return strResult;
+    }
+    
+    
+    public void fh(View view){
+    	this.finish();
     }
 }

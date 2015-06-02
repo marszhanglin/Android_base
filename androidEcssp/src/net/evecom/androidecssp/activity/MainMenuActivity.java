@@ -14,7 +14,6 @@ import net.evecom.androidecssp.bean.HandlerView;
 import net.evecom.androidecssp.bean.Picture;
 import net.evecom.androidecssp.util.HttpUtil;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -66,10 +65,11 @@ public class MainMenuActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 Intent intent = null;
                 switch (arg2) {
-                    case 0: // 消息公告
-                    	toast(HttpUtil.getPCURL(getApplicationContext()), 1); 
+                    case 0: // 消息公告 
 //                        intent = new Intent(MainMenuActivity.this, Web0Activity.class);
 //                        startActivity(intent);
+                    	intent=new Intent(getApplicationContext(), EventListActivity.class);
+                    	startActivity(intent);
                         break;
                     case 1: // 事件登记
                     	Log.e("mars", "bb");

@@ -56,7 +56,7 @@ public class WelcomeActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState); 
-		setContentView(R.layout.welcome); 
+		setContentView(R.layout.welcome_at); 
 		passnameSp=this.getSharedPreferences("PASSNAME", 0);
 		initView();
 	}
@@ -159,8 +159,7 @@ public class WelcomeActivity extends BaseActivity {
 					//登陆线程通信实体  在线程中创建
 					Message loginMessage=new Message();
 					
-					loginResult = connServerForResultPost(HttpUtil.getPCURL(getApplicationContext())
-							+"jfs/mobile/androidIndex/login",
+					loginResult = connServerForResultPost("jfs/mobile/androidIndex/login",
 							"username="+username
 							+"&password="+password.trim()
 							+"&imei="+PhoneUtil.getInstance().getImei(getApplicationContext()));
@@ -248,7 +247,7 @@ public class WelcomeActivity extends BaseActivity {
 					@Override
 					public Object execute() { 
 						loginResult="";
-						toast("ok", 1);
+//						toast("ok", 1);
 						return null;
 					}
 				});
