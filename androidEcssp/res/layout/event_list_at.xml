@@ -39,7 +39,7 @@
   	android:layout_marginTop="45dp"
   	android:layout_marginBottom="0dp"> 
   	
-<ListView android:id="@+id/add_danger_list_listView"
+<ListView android:id="@+id/event_list_listView_1"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:clickable="true" 

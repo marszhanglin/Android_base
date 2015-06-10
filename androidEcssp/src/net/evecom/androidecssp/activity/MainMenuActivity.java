@@ -12,7 +12,6 @@ import net.evecom.androidecssp.R;
 import net.evecom.androidecssp.base.BaseActivity;
 import net.evecom.androidecssp.bean.HandlerView;
 import net.evecom.androidecssp.bean.Picture;
-import net.evecom.androidecssp.util.HttpUtil;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;

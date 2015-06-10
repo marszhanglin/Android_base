@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+ android:background="#000000"
+  android:gravity="center">
+    
+    <RelativeLayout 
+        
+  			android:layout_width="fill_parent"
+  			android:layout_height="45dp"
+  			android:background="@drawable/title_bar"
+  			android:gravity="center_vertical"  
+  			 > 
+  			<Button
+            android:id="@+id/uploadpictrue_btn_back"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="返回"
+            android:textSize="14sp"
+            android:textColor="#fff" 
+            android:background="@drawable/title_btn_back"
+		    />   
+<!-- android:onClick="chat_back" -->
+      		<TextView
+      		     
+        		android:layout_width="wrap_content" 
+        		android:layout_height="wrap_content" 
+        		android:text="上传图片"
+        		android:layout_centerInParent="true"
+        		android:textSize="20sp"		
+				android:textColor="#ffffff" /> 
+				 
+			    
+		</RelativeLayout> 
+    <ImageView 
+        android:layout_width="fill_parent" 
+        android:layout_height="fill_parent" 
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="45dp"
+        android:layout_marginBottom="55dp"
+        android:id="@+id/uploadpicture_cameraImage"
+         
+        /> 
+        <!-- android:src="@drawable/shakehideimg_man2" -->
+    
+    
+    <RelativeLayout
+        android:id="@+id/main_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:background="@drawable/bottom_bar"
+        >    
+         <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:paddingBottom="2dp"            
+        	>
+        	
+            
+        	 <LinearLayout
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+              	android:gravity="center_horizontal"
+              	android:orientation="vertical"
+              	android:layout_weight="1"
+              	android:onClick="uploadpicture_take_btn">               	
+                <ImageView
+            		android:id="@+id/img_friends"
+        			android:layout_width="wrap_content"
+        			android:layout_height="wrap_content"        	     	
+        			android:scaleType="matrix"
+        			android:clickable="true"
+        			android:src="@drawable/xc_xcxx" 
+        			android:onClick="uploadpicture_take_btn"/>
+                <TextView
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:text="拍照"
+            		android:textColor="#fff"
+            		android:textSize="12sp"
+            		android:onClick="uploadpicture_take_btn" />                
+        	 </LinearLayout>
+        	  <LinearLayout
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+              	android:gravity="center_horizontal"
+              	android:orientation="vertical"
+              	android:layout_weight="1"
+              	android:onClick="uploadpicture_pick_btn">               	
+                <ImageView
+            		android:id="@+id/img_friends"
+        			android:layout_width="wrap_content"
+        			android:layout_height="wrap_content"        	     	
+        			android:scaleType="matrix"
+        			android:clickable="true"
+        			android:src="@drawable/sjtp_tpsc" 
+        			android:onClick="uploadpicture_pick_btn"/>
+                <TextView
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:text="本地"
+            		android:textColor="#fff"
+            		android:textSize="12sp"
+            		android:onClick="uploadpicture_pick_btn" />                
+        	 </LinearLayout>
+        	 <LinearLayout
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+              	android:gravity="center_horizontal"
+              	android:orientation="vertical"
+              	android:layout_weight="1"
+              	android:onClick="uploadpicture_up_btn">               	
+                <ImageView
+            		android:id="@+id/img_settings"
+        			android:layout_width="wrap_content"
+        			android:layout_height="wrap_content"        	     	
+        			android:scaleType="matrix"
+        			android:clickable="true"
+        			android:src="@drawable/tab1_new"
+        			android:onClick="uploadpicture_up_btn"/>
+                <TextView
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:text="添加"
+            		android:textColor="#fff"
+            		android:textSize="12sp"
+            		android:onClick="uploadpicture_up_btn" />                
+        	 </LinearLayout>        
+          <LinearLayout
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+              	android:gravity="center_horizontal"
+              	android:orientation="vertical"
+              	android:layout_weight="1"
+              	android:onClick="fh">               	
+                <ImageView
+            		android:id="@+id/img_settings"
+        			android:layout_width="wrap_content"
+        			android:layout_height="wrap_content"        	     	
+        			android:scaleType="matrix"
+        			android:clickable="true"
+        			android:src="@drawable/sjsb_qx"
+        			android:onClick="fh"/>
+                <TextView
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:text="返回"
+            		android:textColor="#fff"
+            		android:textSize="12sp"
+            		android:onClick="fh" />                
+        	 </LinearLayout>  
+        </LinearLayout>     
+       
+    </RelativeLayout>
+     
+  
+</RelativeLayout>
+
+
+ 

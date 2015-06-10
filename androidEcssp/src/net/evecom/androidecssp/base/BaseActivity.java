@@ -5,6 +5,9 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import net.evecom.androidecssp.R;
+import net.evecom.androidecssp.util.HttpUtil;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
@@ -15,8 +18,6 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.util.EntityUtils;
 
-import net.evecom.androidecssp.R;
-import net.evecom.androidecssp.util.HttpUtil;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -28,11 +29,23 @@ import android.widget.Toast;
 /**
  *  基础的Activity类
  * 2015-2-15下午7:21:37 类BaseActivity
+ * <br>Log.e("mars:EventListActivity.initlist()", e.getMessage());
  * @author Mars zhang
  *
  */
 public class BaseActivity extends Activity {
-
+    /** 数据状态  */
+    protected static final int MESSAGETYPE_01 = 0x0001; 
+    /** 数据状态 */
+    protected static final int MESSAGETYPE_02 = 0x0002;
+    /** 数据状态 */
+    protected static final int MESSAGETYPE_03 = 0x0003;
+    /** 数据状态 */
+    protected static final int MESSAGETYPE_04 = 0x0004;
+    /** 数据状态 */
+    protected static final int MESSAGETYPE_05 = 0x0005;
+    /** 数据状态 */
+    protected static final int MESSAGETYPE_06 = 0x0006;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -112,7 +125,7 @@ public class BaseActivity extends Activity {
     
     /**
      * 
-     * @param strUrl   /jfs/mobile/androidIndex/login
+     * @param strUrl   jfs/mobile/androidIndex/login
      * @param entity_str   username=sysadmin&password=D860103725C09C63BFDFB0D6962EC1AB&imei=null
      * @return
      * @throws ClientProtocolException

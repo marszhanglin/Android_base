@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_margin="20dp"
+    android:background="#00000000" >
+<ImageView android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/file_list_item_image_view"
+    android:src="@drawable/login_error_icon"/>
+    <TextView
+        android:id="@+id/file_list_item_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="middle"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:padding="7dp"
+        android:singleLine="true"
+        android:text=""
+        android:textColor="#FFFFFFFF"
+        android:textSize="15sp" />
+
+</LinearLayout>

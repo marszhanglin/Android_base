@@ -9,18 +9,20 @@ import net.evecom.androidecssp.R;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.TextView;
+
 /**
  * 
  * √Ë ˆMyImageButton
+ * 
  * @author Mars zhang
  * @created 2014-11-5 …œŒÁ10:58:25
  */
 public class MyImageButton extends TextView {
-    public MyImageButton(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        setClickable(true);
-        setFocusable(true);
-        // TextView t = new TextView(context);
-        setBackgroundResource(R.drawable.wgh_main_jd2);
-    }
+	public MyImageButton(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		setClickable(true);
+		setFocusable(true);
+		// TextView t = new TextView(context);
+		setBackgroundResource(R.drawable.wgh_main_jd2);
+	}
 }

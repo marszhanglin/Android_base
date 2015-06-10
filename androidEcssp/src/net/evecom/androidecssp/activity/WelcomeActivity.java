@@ -41,18 +41,8 @@ public class WelcomeActivity extends BaseActivity {
     private ProgressDialog loginProgressDialog = null;
     /** loginResult  **/
     private String loginResult="";
-    /** 数据状态  */
-    private static final int MESSAGETYPE_01 = 0x0001; 
-    /** 数据状态 */
-    private static final int MESSAGETYPE_02 = 0x0002;
-    /** 数据状态 */
-    private static final int MESSAGETYPE_03 = 0x0003;
-    /** 数据状态 */
-    private static final int MESSAGETYPE_04 = 0x0004;
-    /** 数据状态 */
-    private static final int MESSAGETYPE_05 = 0x0005;
-    /** 数据状态 */
-    private static final int MESSAGETYPE_06 = 0x0006;
+    /** 是否真正登入 防止重复提交 **/
+    private Boolean islogining=false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState); 
@@ -142,11 +132,15 @@ public class WelcomeActivity extends BaseActivity {
 	 * 登陆请求
 	 */
 	private void loginsubmit(final String username,final String password) {
+		if(islogining){
+			return ;
+		}
+		
 		//打开进度条
 		loginProgressDialog = ProgressDialog.show(this, "提示", "正在登入，请稍等...");
 		loginProgressDialog.setCancelable(true);
-//		Log.v("mars", EncryptUtil.getInstance().AESencode(password.trim()));//加密
-		
+		Log.v("mars", username+"/"+password);//加密
+		 
 		
 		
 		
@@ -163,6 +157,7 @@ public class WelcomeActivity extends BaseActivity {
 							"username="+username
 							+"&password="+password.trim()
 							+"&imei="+PhoneUtil.getInstance().getImei(getApplicationContext()));
+					
 					//如果接受到返回数据 否则消息提示
 					if(loginResult.length()>5){
 						//如果登陆成功跳转  否则消息提示

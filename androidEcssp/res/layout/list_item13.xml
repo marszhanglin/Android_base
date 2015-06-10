@@ -1,0 +1,68 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_margin="20dp"
+    android:background="#00000000" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:descendantFocusability="blocksDescendants"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/list_item13_tv_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"
+            android:padding="5dp" 
+            android:text="事件名称:"
+            android:textColor="#f46101"
+            android:maxLength="19"
+            android:textSize="19sp"
+            android:textStyle="normal"
+            android:typeface="serif" /> 
+        
+
+        <TextView
+            android:id="@+id/list_item13_tv_2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="事件类别："
+            android:textColor="#666666"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            android:typeface="serif"
+            android:maxLength="24" />
+        
+            <TextView
+            android:id="@+id/list_item13_tv_3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="所属区域："
+            android:textColor="#666666"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            android:typeface="serif"
+            android:maxLength="24" />
+                
+            <TextView
+            android:id="@+id/list_item13_tv_4"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="事发时间："
+            android:textColor="#666666"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            android:typeface="serif"
+            android:maxLength="24" />
+    </LinearLayout>
+
+</LinearLayout>

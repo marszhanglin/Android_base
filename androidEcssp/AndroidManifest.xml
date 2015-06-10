@@ -28,11 +28,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="net.evecom.androidecssp.base.AfnailPictureActivity"
+            android:theme="@android:style/Theme.NoTitleBar"></activity>
+        <activity android:name="net.evecom.androidecssp.base.UploadPictureActivity"
+            android:theme="@android:style/Theme.NoTitleBar"></activity>
+        
         
         <activity android:name="net.evecom.androidecssp.activity.MainMenuActivity"
             android:theme="@android:style/Theme.NoTitleBar"></activity>
-        
         <activity android:name="net.evecom.androidecssp.activity.EventListActivity"
+            android:theme="@android:style/Theme.NoTitleBar"></activity>
+        <activity android:name="net.evecom.androidecssp.activity.ProjectListActivity"
+            android:theme="@android:style/Theme.NoTitleBar"></activity>
+        <activity android:name="net.evecom.androidecssp.activity.TaskListActivity"
+            android:theme="@android:style/Theme.NoTitleBar"></activity>
+        <activity android:name="net.evecom.androidecssp.activity.ResponseListActivity"
+            android:theme="@android:style/Theme.NoTitleBar"></activity>
+        <activity android:name="net.evecom.androidecssp.activity.TaskResponseAddActivity"
             android:theme="@android:style/Theme.NoTitleBar"></activity>
         
         
