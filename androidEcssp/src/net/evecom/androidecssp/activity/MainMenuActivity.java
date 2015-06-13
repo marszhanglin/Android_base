@@ -70,10 +70,9 @@ public class MainMenuActivity extends BaseActivity {
                     	intent=new Intent(getApplicationContext(), EventListActivity.class);
                     	startActivity(intent);
                         break;
-                    case 1: // 事件登记
-                    	Log.e("mars", "bb");
-//                        intent = new Intent(MainMenuActivity.this, EventAddActivity.class);
-//                        startActivity(intent);
+                    case 1: // 事件登记 
+                        intent = new Intent(MainMenuActivity.this, EventAddActivity.class);
+                        startActivity(intent);
                         break;
                     case 2: // 隐患排查
 //                        intent = new Intent(MainMenuActivity.this, Web2Activity.class);

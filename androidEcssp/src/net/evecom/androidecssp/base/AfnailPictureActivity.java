@@ -71,7 +71,7 @@ public class AfnailPictureActivity extends Activity {
         db.deleteById(FileManageBean.class, File_Id);
         // Intent intent = new Intent(this, EventAddActivity.class);
         Intent intent = new Intent();
-        setResult(4, intent);
+        setResult(2, intent);
         finish();
     }
 

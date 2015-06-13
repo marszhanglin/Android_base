@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 import net.evecom.androidecssp.R;
 import net.evecom.androidecssp.base.BaseActivity;
 import net.evecom.androidecssp.base.ICallback;
+import net.evecom.androidecssp.gps.TDTLocation222;
 import net.evecom.androidecssp.util.HttpUtil;
 import net.evecom.androidecssp.util.PhoneUtil;
 import net.evecom.androidecssp.util.ShareUtil;
@@ -14,17 +15,25 @@ import net.evecom.androidecssp.util.entryption.EncryptUtil;
 import org.apache.http.client.ClientProtocolException;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+
+import com.tianditu.android.maps.GeoPoint;
+import com.tianditu.android.maps.MapView;
+import com.tianditu.android.maps.MyLocationOverlay;
 
 public class WelcomeActivity extends BaseActivity {
     /** 用户名EditText */
@@ -43,14 +52,102 @@ public class WelcomeActivity extends BaseActivity {
     private String loginResult="";
     /** 是否真正登入 防止重复提交 **/
     private Boolean islogining=false;
+    /** 是否需要调整定位设置 */
+    private Boolean isNeedGpsSet=false;
+    /** 定位客户端 */
+    MyLocationOverlay mMyLocation = null;
+    /** 当前坐标   */
+    private Location  currentLocation= null;
+    /** 定位管理器 */
+    LocationManager locationManager=null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState); 
 		setContentView(R.layout.welcome_at); 
 		passnameSp=this.getSharedPreferences("PASSNAME", 0);
+		askForOpenGPS();
+		
 		initView();
+		
+		initdata();
 	}
 	
+	private void initdata() {
+		manageGis();
+	}
+	
+	
+    /**
+     * 请求打开gps
+     */
+    private void askForOpenGPS() {
+        boolean gpsEnabled = Settings.Secure.isLocationProviderEnabled(getContentResolver(),
+                LocationManager.GPS_PROVIDER);
+        if (!gpsEnabled) { 
+        	isNeedGpsSet=true;
+            toast("请点击定位服务,并打开GPS卫星选项,否则定位无法正常工作!", 1);
+            Intent intent = new Intent(Settings.ACTION_SETTINGS); 
+            startActivityForResult(intent, 0); 
+        }
+    }
+    
+	
+
+	/**
+	 * GIS操作
+	 */
+	private void manageGis() {
+		//天地图描点   实现系统定位回调接口并处理了坐标数据
+        mMyLocation = new MyOverlay(this, null); 
+        //定位管理器
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+	
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+        	toast("开始定位", 0);
+        	locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+        			1000, 1, mMyLocation);
+        }else if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
+			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,  
+			    	1000, 1, mMyLocation); 
+			toast("开始基站定位", 0);
+		}else{
+        	toast("定位未打开", 0);
+        }
+	} 
+	 /**
+     * 天地图
+     */
+    class MyOverlay extends MyLocationOverlay {
+        public MyOverlay(Context context, MapView mapView) {
+            super(context, mapView); 
+        } 
+        /*
+         * 处理在"我的位置"上的点击事件
+         */
+        protected boolean dispatchTap() { 
+            return true;
+        } 
+        @Override
+        public void onLocationChanged(Location location) {
+            // TODO Auto-generated method stub
+            super.onLocationChanged(location);
+            if (location != null) {
+                currentLocation = location;
+                SharedPreferences sp = getApplicationContext().getSharedPreferences("GPS", MODE_PRIVATE);
+                // 存入数据
+                Editor editor = sp.edit();
+                editor.putString("latitude", "" + location.getLatitude());
+                editor.putString("longitude", "" + location.getLongitude());
+                editor.commit();
+                Log.v("", location.getLatitude()+"-----"+location.getLongitude());
+                toast(location.getLatitude()+"-----"+location.getLongitude(), 0);
+            } 
+            GeoPoint point = mMyLocation.getMyLocation(); 
+        }
+
+    }
+	
+     
 	/**
 	 * 界面初始化 <br>获取所有有用控件byid <br>是否自动登陆操作
 	 */
@@ -122,7 +219,7 @@ public class WelcomeActivity extends BaseActivity {
 			jzmmCheckBox.setChecked(false);
 		}
 		//记住密码且自动登陆时提及登陆请求
-		if(autologin.equals("1")&&rembernp.equals("1")){
+		if(autologin.equals("1")&&rembernp.equals("1")&&!isNeedGpsSet){
 			Log.v("mars", "自动登入");
 			loginsubmit(username,password);
 		} 
@@ -262,11 +359,34 @@ public class WelcomeActivity extends BaseActivity {
 	public void welcomelogin(View view) {
 		String username=userNmaeEditText.getText().toString();
 		String password=passwordEditText.getText().toString();
-		loginsubmit(username,password);
+		loginsubmit(username,password); 
+		
+		/*Intent intent=new Intent(getApplicationContext(), TDTLocation222.class);
+		startActivity(intent);*/
 	}
 	
 
-	
+	@Override
+	protected void onPause() {
+		if (null != mMyLocation) {
+            locationManager.removeUpdates(mMyLocation);
+        }
+		super.onPause();
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		
+		switch (requestCode) {
+		case 0:
+			manageGis();
+			break;
+
+		default:
+			break;
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
 	
 	
 }

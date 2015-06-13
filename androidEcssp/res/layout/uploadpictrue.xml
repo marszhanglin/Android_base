@@ -14,13 +14,13 @@
   			android:gravity="center_vertical"  
   			 > 
   			<Button
-            android:id="@+id/uploadpictrue_btn_back"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="返回"
             android:textSize="14sp"
             android:textColor="#fff" 
+            android:onClick="fh"
             android:background="@drawable/title_btn_back"
 		    />   
 <!-- android:onClick="chat_back" -->

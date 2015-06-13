@@ -82,6 +82,25 @@ public class BaseActivity extends Activity {
         });
         builder1.show();
     }
+    
+	/**
+     * 错误填报提示信息
+     * 
+     * @param errorMsg
+     */
+    protected void DialogToastNoCall(String errorMsg) {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setTitle("提示信息");
+        builder1.setIcon(R.drawable.qq_dialog_default_icon);// 图标
+        builder1.setMessage("" + errorMsg);
+        builder1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            // @Override
+            public void onClick(DialogInterface dialog, int which) {
+            	
+            }
+        });
+        builder1.show();
+    }
     /*DialogToast("aasdasdasd",new ICallback() { 
 		@Override
 		public Object execute() {

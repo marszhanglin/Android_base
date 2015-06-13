@@ -257,7 +257,8 @@
                     android:layout_marginLeft="5dip"
                     android:layout_weight="1"
                     android:background="@drawable/edit_text"
-                    android:maxLength="200" />
+                    android:maxLength="200"
+                    android:lines="3" />
             </LinearLayout>
              
             <LinearLayout

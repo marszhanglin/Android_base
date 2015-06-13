@@ -41,6 +41,16 @@
     <String>orgname</String>
     <StringDoc>组织机构名称</StringDoc>
     </get>
+       <get>
+    <String>Latitude</String>
+    <StringDoc>经度</StringDoc>
+    </get>
+       <get>
+    <String>Longitude</String>
+    <StringDoc>纬度</StringDoc>
+    </get>
+        
+        
     <map>
     <string name="mobile_In_clound">13850159482</string>
     <string name="usernameCN">超级管理员</string>
@@ -52,8 +62,19 @@
     <string name="userid">a382eba16e9a41f9b7377ad760215357</string>
     <string name="autologin">1</string>
     <string name="password">888888</string>
-</map>
+</map> 
 </item>
 
 
-
+<item>
+    <File>GPS</File>
+    <FileDoc>定位</FileDoc>
+    <get>
+    <String>latitude</String>
+    <StringDoc>26.9 x</StringDoc>
+    </get>
+     <get>
+    <String>longitude</String>
+    <StringDoc>118.1 y</StringDoc>
+    </get>
+</item>

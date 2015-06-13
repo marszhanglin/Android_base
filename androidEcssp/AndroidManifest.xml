@@ -13,7 +13,10 @@
     
     <!-- 获取电话状态imei -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    
+    <!-- 定位权限 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/> 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -32,6 +35,12 @@
             android:theme="@android:style/Theme.NoTitleBar"></activity>
         <activity android:name="net.evecom.androidecssp.base.UploadPictureActivity"
             android:theme="@android:style/Theme.NoTitleBar"></activity>
+        <activity android:name="net.evecom.androidecssp.gps.TDTLocation"
+            android:theme="@android:style/Theme.NoTitleBar"></activity>
+        <activity android:name="net.evecom.androidecssp.gps.TDTLocation222"
+            android:theme="@android:style/Theme.NoTitleBar"></activity>
+        
+        
         
         
         <activity android:name="net.evecom.androidecssp.activity.MainMenuActivity"
@@ -46,7 +55,8 @@
             android:theme="@android:style/Theme.NoTitleBar"></activity>
         <activity android:name="net.evecom.androidecssp.activity.TaskResponseAddActivity"
             android:theme="@android:style/Theme.NoTitleBar"></activity>
-        
+        <activity android:name="net.evecom.androidecssp.activity.EventAddActivity"
+            android:theme="@android:style/Theme.NoTitleBar"></activity>
         
         
     </application>

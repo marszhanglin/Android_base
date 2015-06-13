@@ -6,9 +6,6 @@
 package net.evecom.androidecssp.base;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -33,7 +30,6 @@ import android.provider.MediaStore;
 import android.provider.MediaStore.Video.Media;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -46,7 +42,7 @@ import android.widget.Toast;
  * @author Mars zhang
  * 
  */
-public class UploadPictureActivity extends Activity implements OnClickListener {
+public class UploadPictureActivity extends Activity {
     /** 成员变量 */
     private String strImgPath = "";// 照片文件绝对路径
     /** 成员变量 */
@@ -59,8 +55,6 @@ public class UploadPictureActivity extends Activity implements OnClickListener {
     private static final int MESSAGETYPE_02 = 0x0002;
     /** 成员变量 */
     private ProgressDialog progressDialog = null;
-    /** 成员变量 */
-    private Button mBtnBack;
     /** 拍照按钮 */
     private Button takePicture;
     /** 本地选择按钮 */
@@ -85,8 +79,8 @@ public class UploadPictureActivity extends Activity implements OnClickListener {
 
     public void initView() {
         // 返回按钮
-        mBtnBack = (Button) findViewById(R.id.uploadpictrue_btn_back);
-        mBtnBack.setOnClickListener(this);
+//        mBtnBack = (Button) findViewById(R.id.uploadpictrue_btn_back);
+//        mBtnBack.setOnClickListener(this);
         // 图片视图
         imageView = (ImageView) findViewById(R.id.uploadpicture_cameraImage);
         SharedPreferences sp = getApplicationContext().getSharedPreferences("Picture", MODE_PRIVATE);
@@ -135,34 +129,25 @@ public class UploadPictureActivity extends Activity implements OnClickListener {
     }
 
     /**
-     * 本地选择按钮监听
+     * fh
      * 
      * @param v
      */
     public void fh(View v) {
-        Intent intent = new Intent();
-        setResult(RESULT_OK, intent);
+        Intent intent = new Intent(); 
+        intent.putExtra("filePath", "none");
+        setResult(R.layout.uploadpictrue, intent);
         finish();
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.uploadpictrue_btn_back: // mBtnBack.setOnClickListener(this);
-                Intent intent = new Intent();
-                setResult(RESULT_OK, intent);
-                finish();
-                break;
-            default:
-                break;
-        }
-    }
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) { // 点击手机返回按钮时操作
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Intent intent = new Intent();
-            setResult(RESULT_OK, intent);
+        	Intent intent = new Intent(); 
+            intent.putExtra("filePath", "none");
+            setResult(R.layout.uploadpictrue, intent);
             finish();
             return true;
         }
