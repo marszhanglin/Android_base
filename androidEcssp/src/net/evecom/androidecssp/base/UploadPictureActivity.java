@@ -6,6 +6,9 @@
 package net.evecom.androidecssp.base;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -158,8 +161,6 @@ public class UploadPictureActivity extends Activity {
      * 照相功能
      */
     private void cameraMethod() {
-        Intent Intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
         String filename = timeStampFormat.format(new Date());
@@ -167,7 +168,7 @@ public class UploadPictureActivity extends Activity {
         values.put(Media.TITLE, filename);
         photoUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-        startActivityForResult(Intent, 1);
+        startActivityForResult(intent, 1);
     }
 
     @SuppressLint("NewApi")
@@ -176,33 +177,13 @@ public class UploadPictureActivity extends Activity {
         switch (requestCode) {
             case 1: // 从拍照跳转回来
                 if (resultCode == RESULT_OK) {
-                    Bundle bundle = data.getExtras();
-                    Bitmap bitmap = (Bitmap) bundle.get("data");
-
-                    Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, null, null));
-                    String fPath = uri2filePath(uri); // 转化为路径
-                    // System.out.println("4   " + fPath);
+                    String fPath = uri2filePath(photoUri);  
                     SharedPreferences sp = getApplicationContext().getSharedPreferences("Picture", MODE_PRIVATE);
                     // 存入数据
                     Editor editor = sp.edit();
                     editor.putString("fileName", fPath);
-                    editor.commit();
-                    /*FileOutputStream b = null;
-                    try {
-                        b = new FileOutputStream(fPath);
-                        // 把数据写入文件
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } finally {
-                        try {
-                            b.flush();
-                            b.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }*/
-                    imageView.setImageURI(uri);
+                    editor.commit(); 
+                    imageView.setImageURI(photoUri);
                 }
                 break;
 
@@ -266,8 +247,7 @@ public class UploadPictureActivity extends Activity {
         Cursor cursor = managedQuery(uri, proj, null, null, null);
         int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
-        String path = cursor.getString(index);
-        // System.out.println("uri2filePath    "+path);
+        String path = cursor.getString(index); 
         return path;
     }
 
