@@ -10,6 +10,7 @@ import net.evecom.androidecssp.gps.TDTLocation222;
 import net.evecom.androidecssp.util.HttpUtil;
 import net.evecom.androidecssp.util.PhoneUtil;
 import net.evecom.androidecssp.util.ShareUtil;
+import net.evecom.androidecssp.util.UiUtil;
 import net.evecom.androidecssp.util.entryption.EncryptUtil;
 
 import org.apache.http.client.ClientProtocolException;
@@ -65,6 +66,8 @@ public class WelcomeActivity extends BaseActivity {
 		super.onCreate(savedInstanceState); 
 		setContentView(R.layout.welcome_at); 
 		passnameSp=this.getSharedPreferences("PASSNAME", 0);
+		
+		
 		askForOpenGPS();
 		
 		initView();
@@ -73,7 +76,7 @@ public class WelcomeActivity extends BaseActivity {
 	}
 	
 	private void initdata() {
-		manageGis();
+//		manageGis();
 	}
 	
 	
@@ -389,4 +392,9 @@ public class WelcomeActivity extends BaseActivity {
 	}
 	
 	
+	
+	
+	public void test(View view){
+		toast(UiUtil.getResolution(getWindowManager()), 1);
+	}
 }

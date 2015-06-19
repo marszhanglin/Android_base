@@ -16,7 +16,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,8 +50,8 @@ public class MainMenuActivity extends BaseActivity {
         mainMenuActivityInstance = this; 
         // 换成gridView
         gridView = (GridView) findViewById(R.id.main_tab_weixin_gridview);
-        int[] images = new int[] { R.drawable.wgh_main_ptxx2, R.drawable.wgh_main_sjdj2, R.drawable.wgh_main_rcbg2,
-                R.drawable.wgh_main_jcsj2, R.drawable.wgh_main_zygz3, R.drawable.wgh_main_xtfx2,
+        int[] images = new int[] { R.drawable.wgh_main_ptxx2, R.drawable.wgh_main_sjdj2, R.drawable.wgh_main_zygz3,
+                R.drawable.wgh_main_jcsj2, R.drawable.wgh_main_rcbg2 , R.drawable.wgh_main_xtfx2,
                 R.drawable.wgh_main_xtsz2, R.drawable.wgh_main_tcxt2 };
         // 平台消息、事件登记、日常办公、基础数据、专业工作、统计分析、系统设置、退出系统
         String[] itemtitles = new String[] { "消息公告", "预警提醒", "隐患排查", "执法检查"
@@ -64,10 +63,10 @@ public class MainMenuActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 Intent intent = null;
                 switch (arg2) {
-                    case 0: // 消息公告 
+                    case 0: // 消息公告 EmergencyNotification
 //                        intent = new Intent(MainMenuActivity.this, Web0Activity.class);
 //                        startActivity(intent);
-                    	intent=new Intent(getApplicationContext(), EventListActivity.class);
+                    	intent=new Intent(getApplicationContext(), EmergencyNotification.class);
                     	startActivity(intent);
                         break;
                     case 1: // 事件登记 
@@ -75,6 +74,8 @@ public class MainMenuActivity extends BaseActivity {
                         startActivity(intent);
                         break;
                     case 2: // 隐患排查
+                    	intent=new Intent(getApplicationContext(), EventListActivity.class);
+                    	startActivity(intent);
 //                        intent = new Intent(MainMenuActivity.this, Web2Activity.class);
 //                        startActivity(intent);
                         break;
@@ -95,6 +96,7 @@ public class MainMenuActivity extends BaseActivity {
 //                        startActivity(intent);
                         break;
                     case 7:
+                    	finish();
                         if (menu_display) { // 如果 Menu已经打开 ，先关闭Menu
                             menuWindow.dismiss();
                             menu_display = false;

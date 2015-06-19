@@ -183,10 +183,22 @@ public class ProjectListActivity extends BaseActivity {
             ImageView imageViewProjectCode = (ImageView) view.findViewById(R.id.list_item_img);
             TextView textViewProjectName = (TextView) view.findViewById(R.id.list_item_tv); 
             if(list.get(i).getProjectcode().equals("F42")){
-            	imageViewProjectCode.setImageResource(R.drawable.ljwg_dw_gzrz);
-            }else{
-            	imageViewProjectCode.setImageResource(R.drawable.ljwg_dw_ryzf);
-            }
+            	imageViewProjectCode.setImageResource(R.drawable.ljwg_dw_gzrz_aqjj);
+            }else if(list.get(i).getProjectcode().equals("F43")){
+            	imageViewProjectCode.setImageResource(R.drawable.ljwg_dw_gzrz_ryjz);
+            }else if(list.get(i).getProjectcode().equals("F44")){
+            	imageViewProjectCode.setImageResource(R.drawable.ljwg_dw_gzrz_xcqx);
+            }else if(list.get(i).getProjectcode().equals("F45")){
+            	imageViewProjectCode.setImageResource(R.drawable.ljwg_dw_gzrz_yzps);
+            }else if(list.get(i).getProjectcode().equals("F46")){
+            	imageViewProjectCode.setImageResource(R.drawable.ljwg_dw_gzrz_ryss);
+            }else if(list.get(i).getProjectcode().equals("F47")){
+            	imageViewProjectCode.setImageResource(R.drawable.ljwg_dw_gzrz_xcjk);
+            }else if(list.get(i).getProjectcode().equals("F48")){
+            	imageViewProjectCode.setImageResource(R.drawable.ljwg_dw_gzrz_zjzc);
+            }else if(list.get(i).getProjectcode().equals("F49")){
+            	imageViewProjectCode.setImageResource(R.drawable.ljwg_dw_gzrz_aqjj);
+            } 
             textViewProjectName.setText(list.get(i).getProjectname());
             view.setOnClickListener(new View.OnClickListener() {
 				@Override

@@ -125,7 +125,7 @@ public class BaseActivity extends Activity {
      * @throws IOException
      * @throws ClientProtocolException
      */ 
-    private String connServerForResult(String strUrl) throws Exception {
+    protected String connServerForResult(String strUrl) throws Exception {
         // HttpGet∂‘œÛ
         HttpGet httpRequest = new HttpGet(strUrl);
         String strResult = "";
@@ -150,7 +150,7 @@ public class BaseActivity extends Activity {
      * @throws ClientProtocolException
      * @throws IOException
      */
-    public String connServerForResultPost(String strUrl, String entity_str) throws ClientProtocolException,
+    protected String connServerForResultPost(String strUrl, String entity_str) throws ClientProtocolException,
             IOException {
         String strResult = "";
         URL url = new URL(HttpUtil.getPCURL(getApplicationContext()) +strUrl);
@@ -173,6 +173,9 @@ public class BaseActivity extends Activity {
         }
         return strResult;
     }
+    
+    
+    
     
     
     public void fh(View view){

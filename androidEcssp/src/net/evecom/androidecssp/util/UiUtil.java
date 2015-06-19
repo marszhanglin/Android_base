@@ -5,8 +5,11 @@
  */
 package net.evecom.androidecssp.util;
 
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -42,5 +45,55 @@ public class UiUtil {
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
+    }
+    
+    
+    /**
+     * 获取屏幕宽度
+     * @return
+     */
+    public static int getWindowWidth(WindowManager wm){
+    	Display display= wm.getDefaultDisplay();
+    	
+    	return display.getWidth();
+    }
+    
+    /**
+     * 获取屏幕宽度   通过矩阵的方式
+     * @return
+     */
+    public static int getWindowWidthBymDisplayMetrics(WindowManager wm){
+    	DisplayMetrics mDisplayMetrics = new DisplayMetrics();
+    	wm.getDefaultDisplay().getMetrics(mDisplayMetrics); 
+    	return mDisplayMetrics.widthPixels;
+    }
+    
+    
+    /**
+     * 获取屏幕宽度
+     * @return
+     */
+    public static int getWindowHeight(WindowManager wm){
+    	Display display= wm.getDefaultDisplay();
+    	
+    	return display.getHeight();
+    }
+    
+    /**
+     * 获取屏幕宽度   通过矩阵的方式
+     * @return
+     */
+    public static int getWindowHeightBymDisplayMetrics(WindowManager wm){
+    	DisplayMetrics mDisplayMetrics = new DisplayMetrics();
+    	wm.getDefaultDisplay().getMetrics(mDisplayMetrics); 
+    	return mDisplayMetrics.heightPixels;
+    }
+    
+    
+    /***
+     * 获取分辨率
+     */
+    public static  String getResolution(WindowManager wm){
+    	return getWindowHeight(wm)+"-"+getWindowWidth(wm);
     }
 }

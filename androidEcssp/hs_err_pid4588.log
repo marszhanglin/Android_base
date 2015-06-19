@@ -1,0 +1,109 @@
+#
+# An unexpected error has been detected by Java Runtime Environment:
+#
+#  Internal Error (classFileParser.cpp:2923), pid=4588, tid=4720
+#  Error: ShouldNotReachHere()
+#
+# Java VM: Java HotSpot(TM) Client VM (11.0-b15 mixed mode windows-x86)
+# If you would like to submit a bug report, please visit:
+#   http://java.sun.com/webapps/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x01ca9800):  JavaThread "Unknown thread" [_thread_in_vm, id=4720, stack(0x00390000,0x003e0000)]
+
+Stack: [0x00390000,0x003e0000]
+[error occurred during error reporting (printing stack bounds), id 0xc0000005]
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+
+Other Threads:
+
+=>0x01ca9800 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=4720, stack(0x00390000,0x003e0000)]
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Dynamic libraries:
+0x00400000 - 0x00424000 	D:\eclipse\adt-bundle-windows-x86-20131030\eclipse\jre\bin\javaw.exe
+0x77940000 - 0x77aae000 	C:\windows\SYSTEM32\ntdll.dll
+0x75340000 - 0x75480000 	C:\windows\SYSTEM32\KERNEL32.DLL
+0x76140000 - 0x76217000 	C:\windows\SYSTEM32\KERNELBASE.dll
+0x70030000 - 0x700d0000 	C:\windows\system32\apphelp.dll
+0x55610000 - 0x55876000 	C:\windows\AppPatch\AcGenral.DLL
+0x76020000 - 0x760e3000 	C:\windows\SYSTEM32\msvcrt.dll
+0x75f30000 - 0x75f71000 	C:\windows\SYSTEM32\sechost.dll
+0x75140000 - 0x7515e000 	C:\windows\SYSTEM32\SspiCli.dll
+0x77770000 - 0x777b5000 	C:\windows\SYSTEM32\SHLWAPI.dll
+0x73f20000 - 0x7400d000 	C:\windows\SYSTEM32\UxTheme.dll
+0x75b90000 - 0x75ce3000 	C:\windows\SYSTEM32\USER32.dll
+0x75690000 - 0x7579e000 	C:\windows\SYSTEM32\GDI32.dll
+0x74cf0000 - 0x74d13000 	C:\windows\SYSTEM32\WINMM.dll
+0x74260000 - 0x74273000 	C:\windows\SYSTEM32\samcli.dll
+0x751f0000 - 0x75318000 	C:\windows\SYSTEM32\ole32.dll
+0x75e90000 - 0x75f25000 	C:\windows\SYSTEM32\OLEAUT32.dll
+0x550d0000 - 0x550e7000 	C:\windows\SYSTEM32\MSACM32.dll
+0x74d40000 - 0x74d48000 	C:\windows\SYSTEM32\VERSION.dll
+0x76220000 - 0x774cc000 	C:\windows\SYSTEM32\SHELL32.dll
+0x750b0000 - 0x750cb000 	C:\windows\SYSTEM32\USERENV.dll
+0x6fb00000 - 0x6fb1a000 	C:\windows\SYSTEM32\dwmapi.dll
+0x734f0000 - 0x7363a000 	C:\windows\SYSTEM32\urlmon.dll
+0x757a0000 - 0x7581c000 	C:\windows\SYSTEM32\ADVAPI32.dll
+0x74010000 - 0x74075000 	C:\windows\SYSTEM32\WINSPOOL.DRV
+0x6e950000 - 0x6e966000 	C:\windows\SYSTEM32\MPR.dll
+0x774d0000 - 0x7758a000 	C:\windows\SYSTEM32\RPCRT4.dll
+0x75130000 - 0x7513a000 	C:\windows\SYSTEM32\CRYPTBASE.dll
+0x75480000 - 0x755fd000 	C:\windows\SYSTEM32\combase.dll
+0x74980000 - 0x749a3000 	C:\windows\SYSTEM32\WINMMBASE.dll
+0x74ce0000 - 0x74cef000 	C:\windows\SYSTEM32\profapi.dll
+0x74aa0000 - 0x74cd2000 	C:\windows\SYSTEM32\iertutil.dll
+0x74d70000 - 0x74f54000 	C:\windows\SYSTEM32\WININET.dll
+0x750d0000 - 0x75124000 	C:\windows\SYSTEM32\bcryptPrimitives.dll
+0x76100000 - 0x7613c000 	C:\windows\SYSTEM32\cfgmgr32.dll
+0x74950000 - 0x74971000 	C:\windows\SYSTEM32\DEVOBJ.dll
+0x748c0000 - 0x7494b000 	C:\windows\SYSTEM32\SHCORE.DLL
+0x775d0000 - 0x775f7000 	C:\windows\system32\IMM32.DLL
+0x75820000 - 0x75932000 	C:\windows\SYSTEM32\MSCTF.dll
+0x7c340000 - 0x7c396000 	D:\eclipse\adt-bundle-windows-x86-20131030\eclipse\jre\bin\msvcr71.dll
+0x6d8b0000 - 0x6db06000 	D:\eclipse\adt-bundle-windows-x86-20131030\eclipse\jre\bin\client\jvm.dll
+0x6d330000 - 0x6d338000 	D:\eclipse\adt-bundle-windows-x86-20131030\eclipse\jre\bin\hpi.dll
+0x75330000 - 0x75336000 	C:\windows\SYSTEM32\PSAPI.DLL
+0x6d420000 - 0x6d449000 	D:\eclipse\adt-bundle-windows-x86-20131030\eclipse\jre\bin\jdwp.dll
+0x6d750000 - 0x6d756000 	D:\eclipse\adt-bundle-windows-x86-20131030\eclipse\jre\bin\npt.dll
+0x6d860000 - 0x6d86c000 	D:\eclipse\adt-bundle-windows-x86-20131030\eclipse\jre\bin\verify.dll
+0x6d3d0000 - 0x6d3ef000 	D:\eclipse\adt-bundle-windows-x86-20131030\eclipse\jre\bin\java.dll
+0x6d8a0000 - 0x6d8af000 	D:\eclipse\adt-bundle-windows-x86-20131030\eclipse\jre\bin\zip.dll
+
+VM Arguments:
+jvm_args: -agentlib:jdwp=transport=dt_socket,suspend=y,address=localhost:57089 -Dfile.encoding=GBK -Xbootclasspath:D:\eclipse\adt-bundle-windows-x86-20131030\sdk\platforms\android-17\android.jar 
+java_command: encryption.EncryptUtil
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=C:\Program Files (x86)\Java\jdk1.8.0_20
+CLASSPATH=C:\Program Files (x86)\Java\jdk1.8.0_20\lib
+PATH=D:\eclipse\adt-bundle-windows-x86-20131030\eclipse\jre\bin;D:/eclipse/adt-bundle-windows-x86-20131030/eclipse/jre/bin/client;D:/eclipse/adt-bundle-windows-x86-20131030/eclipse/jre/bin;D:/eclipse/adt-bundle-windows-x86-20131030/eclipse/jre/lib/i386;E:\app\EVECOM-PC\product\11.2.0\dbhome_1\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Common Files\lenovo\easyplussdk\bin;C:\ProgramData\Lenovo\ReadyApps;D:\SVN\bin;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files (x86)\Java\jdk1.8.0_20\bin;D:\eclipse\adt-bundle-windows-x86-20131030\eclipse;
+USERNAME=EVECOM-PC
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 60 Stepping 3, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows NT 6.2 Build 9200 
+
+CPU:total 4 (8 cores per cpu, 2 threads per core) family 6 model 12 stepping 3, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, ht
+
+Memory: 4k page, physical 4082312k(1474304k free), swap 4194303k(3768592k free)
+
+vm_info: Java HotSpot(TM) Client VM (11.0-b15) for windows-x86 JRE (1.6.0_10-rc2-b32), built on Sep 12 2008 00:52:11 by "java_re" with MS VC++ 7.1
+
+time: Tue Jun 16 08:53:15 2015
+elapsed time: 0 seconds
+

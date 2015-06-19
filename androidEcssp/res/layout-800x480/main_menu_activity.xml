@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/wgh_main_cbj2"
+    android:orientation="vertical" > 
+
+    <RelativeLayout
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/title_bar"
+        android:gravity="center_vertical" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="30dp"
+            android:src="@drawable/wgh_main_logo" />
+
+        <net.evecom.androidecssp.view.MyImageButton
+            android:id="@+id/main_tab_weixin_myimagebutton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="220dp" 
+            android:background="#00000000" 
+            android:text="福建"
+            android:paddingLeft="50dp"
+            android:paddingTop="8dp"
+            android:paddingRight="18dp"
+            android:onClick="jd_click"
+            android:textSize="15sp"
+            android:singleLine="true"
+        	android:ellipsize="marquee"  
+        	android:focusable="true"
+        	android:focusableInTouchMode="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/wgh_main_law1"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:onClick="toweb2" >
+
+        <ImageView
+            android:id="@+id/add_friend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:scaleType="matrix"
+            android:src="@drawable/wgh_main_lb2" />
+
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/add_friend"
+            android:padding="8dp"
+            android:text="紧急通知"
+            android:textColor="#fff"
+            android:layout_marginLeft="10dp"
+            android:textSize="17sp" /> 
+    </RelativeLayout>
+
+    <GridView
+        android:id="@+id/main_tab_weixin_gridview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="20dp"
+        android:columnWidth="77dip"
+        android:gravity="center"
+        android:horizontalSpacing="1dp"
+        android:numColumns="auto_fit"
+        android:stretchMode="spacingWidthUniform"
+        android:verticalSpacing="15dp" />
+    <!--
+              <GridView 
+            android:layout_marginTop="10dp"
+	    android:id="@+id/main_tab_weixin_gridview"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"  
+	    android:columnWidth="93dip"
+	     
+	    android:numColumns="auto_fit"
+	    android:horizontalSpacing="1dp"
+	    android:verticalSpacing="15dp"     
+	    android:stretchMode="spacingWidthUniform"
+	    android:gravity="center" 
+    	/>
+    -->
+
+</LinearLayout>
