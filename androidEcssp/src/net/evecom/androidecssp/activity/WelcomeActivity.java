@@ -1,19 +1,23 @@
 package net.evecom.androidecssp.activity;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.regex.Pattern;
 
 import net.evecom.androidecssp.R;
 import net.evecom.androidecssp.base.BaseActivity;
 import net.evecom.androidecssp.base.ICallback;
-import net.evecom.androidecssp.gps.TDTLocation222;
+import net.evecom.androidecssp.bean.SysDictBean;
 import net.evecom.androidecssp.util.HttpUtil;
 import net.evecom.androidecssp.util.PhoneUtil;
 import net.evecom.androidecssp.util.ShareUtil;
 import net.evecom.androidecssp.util.UiUtil;
 import net.evecom.androidecssp.util.entryption.EncryptUtil;
+import net.tsz.afinal.FinalDb;
 
 import org.apache.http.client.ClientProtocolException;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -51,6 +55,8 @@ public class WelcomeActivity extends BaseActivity {
     private ProgressDialog loginProgressDialog = null;
     /** loginResult  **/
     private String loginResult="";
+    /** dictResult  **/
+    private String dictResult="";
     /** 是否真正登入 防止重复提交 **/
     private Boolean islogining=false;
     /** 是否需要调整定位设置 */
@@ -61,24 +67,90 @@ public class WelcomeActivity extends BaseActivity {
     private Location  currentLocation= null;
     /** 定位管理器 */
     LocationManager locationManager=null;
+    /** 数据库 */
+    FinalDb db=null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState); 
 		setContentView(R.layout.welcome_at); 
 		passnameSp=this.getSharedPreferences("PASSNAME", 0);
 		
+		initdata();
 		
 		askForOpenGPS();
 		
 		initView();
 		
-		initdata();
+		
 	}
-	
+	/**
+	 * app数据初始化
+	 */
 	private void initdata() {
 //		manageGis();
+		long s=System.currentTimeMillis();
+		db=FinalDb.create(this);
+		Log.v("mars", "创建"+(System.currentTimeMillis()-s)/1000+"秒");
+		db.deleteAll(SysDictBean.class);
+		Log.v("mars", "删除"+(System.currentTimeMillis()-s)/1000+"秒");
+		//获取数据字典数据
+		getDictSave2SqlData();
+		
 	}
 	
+	/**
+	 * 获取数据字典数据并保存至数据库
+	 */
+	private void getDictSave2SqlData() {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try { 
+					dictResult=connServerForResultPost("jfs/mobile/androidIndex/gitSysDicts", "");
+					Bundle dictBundle =new Bundle();
+					dictBundle.putString("dictResult", dictResult);
+				} catch (ClientProtocolException e) {
+					Log.e("mars", "数据字典获取："+e.getMessage());
+				} catch (IOException e) {
+					Log.e("mars", "数据字典获取："+e.getMessage());
+				} finally{
+					try {
+						putString2Map(dictResult);
+					} catch (JSONException e) {
+						Log.e("mars", "数据字典json解析："+e.getMessage());
+					}
+				}
+			}
+		}).start();
+	}
+	
+	
+	/**
+	 * 将数据字典str转成map
+	 * @param val
+	 * @return
+	 * @throws JSONException 
+	 */
+	private void putString2Map(String val) throws JSONException{
+		if(null==val||val.length()<1){
+			return ;
+		}
+		long s=System.currentTimeMillis();
+		JSONObject jsonObject=new JSONObject(val);
+		Log.v("mars", "JSONObject(val)"+(System.currentTimeMillis()-s)/1000+"秒");
+		Iterator< String> dickKeyIterator=jsonObject.keys();
+		Log.v("mars", "keys"+(System.currentTimeMillis()-s)/1000+"秒");
+		while(dickKeyIterator.hasNext()){
+			String key=dickKeyIterator.next();
+			SysDictBean dictBean=new SysDictBean();
+			dictBean.setIdkey(key);
+			dictBean.setValue(jsonObject.get(key).toString());
+			db.save(dictBean);
+			Log.v("mars", "save"+(System.currentTimeMillis()-s)/1000+"秒");
+//			dictBean=null;
+		}
+		Log.v("mars", (System.currentTimeMillis()-s)/1000+"秒");
+	}
 	
     /**
      * 请求打开gps
@@ -288,34 +360,39 @@ public class WelcomeActivity extends BaseActivity {
 		//重写handlerMessage  
 		@Override
 		public void handleMessage(Message msg) {
-			Editor editor= passnameSp.edit();
+			final Editor editor= passnameSp.edit();
 			switch (msg.what) {
 			case MESSAGETYPE_01:
 				//关闭登录进度条
 				if (null != loginProgressDialog) {
 					loginProgressDialog.dismiss();
                 }
-				//存储数据--用户名，密码
-				String username=userNmaeEditText.getText().toString();
-				String password=passwordEditText.getText().toString();
-				editor.putString("username", username);
-				editor.putString("password", password);
-				
-				//分割存储--user org
-				String[] loginResults = Pattern.compile(HttpUtil.DELIMITER).split(loginResult);
-				editor.putString("userid", loginResults[1]); 
-				editor.putString("usernameCN", loginResults[2]); 
-				editor.putString("sex", loginResults[3]); 
-				editor.putString("mobile_In_clound", loginResults[4]); 
-				editor.putString("orgid", loginResults[5]); 
-				editor.putString("orgname", loginResults[6]);  
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						//存储数据--用户名，密码
+						String username=userNmaeEditText.getText().toString();
+						String password=passwordEditText.getText().toString();
+						editor.putString("username", username);
+						editor.putString("password", password);
+						
+						//分割存储--user org
+						String[] loginResults = Pattern.compile(HttpUtil.DELIMITER).split(loginResult);
+						editor.putString("userid", loginResults[1]); 
+						editor.putString("usernameCN", loginResults[2]); 
+						editor.putString("sex", loginResults[3]); 
+						editor.putString("mobile_In_clound", loginResults[4]); 
+						editor.putString("orgid", loginResults[5]); 
+						editor.putString("orgname", loginResults[6]);  
+						editor.commit();  
+					}
+				}).start();
 				
 				
 				Intent intent = new Intent();
 			    intent.setClass(WelcomeActivity.this, MainMenuActivity.class);
 			    startActivity(intent);
 			    WelcomeActivity.this.finish();
-				editor.commit(); 
 				Log.v("mars", "成功登陆");
 				break;
 			case MESSAGETYPE_02:
@@ -338,7 +415,7 @@ public class WelcomeActivity extends BaseActivity {
 				if (null != loginProgressDialog) {
 					loginProgressDialog.dismiss();
                 }
-				DialogToast(loginResult, new ICallback() { 
+				DialogToast("登陆失败,请重新登录！", new ICallback() { 
 					@Override
 					public Object execute() { 
 						loginResult="";
