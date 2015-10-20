@@ -4,20 +4,27 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import android.util.Log;
-
 import net.evecom.androidecssp.util.HttpUtil;
+import android.util.Log;
 
 public class HttpInfo { 
 	/** 服务器端IP地址 */
 	private String ip;
 	/** 服务器端端口 */
-	private int port;
+	private int port=0;
 	/** 服务器端项目名称 */
 	private String projectName;
+	/** 存在服务器端最新版本信息xml文件名 */
+	private String versionxml;
 	/** 自己单例 */
 	private static HttpInfo me;
 	
+	public String getVersionxml() {
+		return versionxml;
+	}
+	public void setVersionxml(String versionxml) {
+		this.versionxml = versionxml;
+	}
 	public String getIp() {
 		return ip;
 	}
@@ -58,6 +65,7 @@ public class HttpInfo {
 			setIp(properties.getProperty("IP"));
 			setPort(new Integer(properties.getProperty("PORT")));
 			setProjectName(properties.getProperty("PROJECT"));
+			setVersionxml(properties.getProperty("VERSIONXML"));
 			Log.v("mars", "执行HttpInfo单例构造函数");
 		} catch (IOException e) {
 			Log.e("mars", "获取HttpInfo.properties出错："+e.getMessage());

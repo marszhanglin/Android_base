@@ -2,6 +2,7 @@ package net.evecom.androidecssp.activity;
 
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import net.evecom.androidecssp.R;
@@ -90,9 +91,13 @@ public class WelcomeActivity extends BaseActivity {
 //		manageGis();
 		long s=System.currentTimeMillis();
 		db=FinalDb.create(this);
-		Log.v("mars", "创建"+(System.currentTimeMillis()-s)/1000+"秒");
+		List<SysDictBean> list=db.findAll(SysDictBean.class);
+		Log.v("mars", list.size()+"findAll__"+(System.currentTimeMillis()-s)/1000+"秒");
+		//数据库有数据时不请求
+		if(null!=list&&list.size()>0){
+			return ;
+		}
 		db.deleteAll(SysDictBean.class);
-		Log.v("mars", "删除"+(System.currentTimeMillis()-s)/1000+"秒");
 		//获取数据字典数据
 		getDictSave2SqlData();
 		
@@ -107,8 +112,6 @@ public class WelcomeActivity extends BaseActivity {
 			public void run() {
 				try { 
 					dictResult=connServerForResultPost("jfs/mobile/androidIndex/gitSysDicts", "");
-					Bundle dictBundle =new Bundle();
-					dictBundle.putString("dictResult", dictResult);
 				} catch (ClientProtocolException e) {
 					Log.e("mars", "数据字典获取："+e.getMessage());
 				} catch (IOException e) {
@@ -137,16 +140,13 @@ public class WelcomeActivity extends BaseActivity {
 		}
 		long s=System.currentTimeMillis();
 		JSONObject jsonObject=new JSONObject(val);
-		Log.v("mars", "JSONObject(val)"+(System.currentTimeMillis()-s)/1000+"秒");
 		Iterator< String> dickKeyIterator=jsonObject.keys();
-		Log.v("mars", "keys"+(System.currentTimeMillis()-s)/1000+"秒");
 		while(dickKeyIterator.hasNext()){
 			String key=dickKeyIterator.next();
 			SysDictBean dictBean=new SysDictBean();
 			dictBean.setIdkey(key);
 			dictBean.setValue(jsonObject.get(key).toString());
 			db.save(dictBean);
-			Log.v("mars", "save"+(System.currentTimeMillis()-s)/1000+"秒");
 //			dictBean=null;
 		}
 		Log.v("mars", (System.currentTimeMillis()-s)/1000+"秒");

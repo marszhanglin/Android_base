@@ -373,7 +373,7 @@ public class EventAddActivity extends BaseActivity {
 			} // 上传文件
 		}
 		FinalHttp fh = new FinalHttp();
-		fh.post(HttpUtil.getPCURL(getApplicationContext())
+		fh.post(HttpUtil.getPCURL()
 				+ "jfs/mobile/androidIndex/eventFileSave", params,
 				new AjaxCallBack<String>() {
 					@Override

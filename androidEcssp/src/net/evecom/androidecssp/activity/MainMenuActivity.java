@@ -92,8 +92,8 @@ public class MainMenuActivity extends BaseActivity {
 //                        startActivity(intent);
                         break;
                     case 6:// œµÕ≥…Ë÷√
-//                        intent = new Intent(MainMenuActivity.this, SystemSetingActivity.class);
-//                        startActivity(intent);
+                        intent = new Intent(MainMenuActivity.this, SystemSetingActivity.class);
+                        startActivity(intent);
                         break;
                     case 7:
                     	finish();

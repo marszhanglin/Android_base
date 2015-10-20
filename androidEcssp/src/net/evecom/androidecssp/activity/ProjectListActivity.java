@@ -182,21 +182,21 @@ public class ProjectListActivity extends BaseActivity {
             }
             ImageView imageViewProjectCode = (ImageView) view.findViewById(R.id.list_item_img);
             TextView textViewProjectName = (TextView) view.findViewById(R.id.list_item_tv); 
-            if(list.get(i).getProjectcode().equals("F42")){
+            if(list.get(i).getProjectcode().equals("F4_2")){
             	imageViewProjectCode.setImageResource(R.drawable.ljwg_dw_gzrz_aqjj);
-            }else if(list.get(i).getProjectcode().equals("F43")){
+            }else if(list.get(i).getProjectcode().equals("F4_3")){
             	imageViewProjectCode.setImageResource(R.drawable.ljwg_dw_gzrz_ryjz);
-            }else if(list.get(i).getProjectcode().equals("F44")){
+            }else if(list.get(i).getProjectcode().equals("F4_4")){
             	imageViewProjectCode.setImageResource(R.drawable.ljwg_dw_gzrz_xcqx);
-            }else if(list.get(i).getProjectcode().equals("F45")){
+            }else if(list.get(i).getProjectcode().equals("F4_5")){
             	imageViewProjectCode.setImageResource(R.drawable.ljwg_dw_gzrz_yzps);
-            }else if(list.get(i).getProjectcode().equals("F46")){
+            }else if(list.get(i).getProjectcode().equals("F4_6")){
             	imageViewProjectCode.setImageResource(R.drawable.ljwg_dw_gzrz_ryss);
-            }else if(list.get(i).getProjectcode().equals("F47")){
+            }else if(list.get(i).getProjectcode().equals("F4_7")){
             	imageViewProjectCode.setImageResource(R.drawable.ljwg_dw_gzrz_xcjk);
-            }else if(list.get(i).getProjectcode().equals("F48")){
+            }else if(list.get(i).getProjectcode().equals("F4_8")){
             	imageViewProjectCode.setImageResource(R.drawable.ljwg_dw_gzrz_zjzc);
-            }else if(list.get(i).getProjectcode().equals("F49")){
+            }else if(list.get(i).getProjectcode().equals("F4_9")){
             	imageViewProjectCode.setImageResource(R.drawable.ljwg_dw_gzrz_aqjj);
             } 
             textViewProjectName.setText(list.get(i).getProjectname());

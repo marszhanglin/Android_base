@@ -21,6 +21,7 @@ import org.apache.http.util.EntityUtils;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -153,7 +154,7 @@ public class BaseActivity extends Activity {
     protected String connServerForResultPost(String strUrl, String entity_str) throws ClientProtocolException,
             IOException {
         String strResult = "";
-        URL url = new URL(HttpUtil.getPCURL(getApplicationContext()) +strUrl);
+        URL url = new URL(HttpUtil.getPCURL() +strUrl);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         byte[] entity = entity_str.getBytes();
@@ -172,13 +173,27 @@ public class BaseActivity extends Activity {
             strResult = buffer.toString();
         }
         return strResult;
-    }
-    
-    
-    
-    
+    } 
     
     public void fh(View view){
     	this.finish();
     }
+    
+    /**
+     * 要加动画过度动画  所以要重写finish方法
+     */ 
+    @Override
+    public void finish(){
+    	super.finish();
+    	overridePendingTransition(R.anim.activity_in_heart , R.anim.activity_out_heart);
+    } 
+    
+    /**
+     * 要加动画过度动画  所以要重写startActivity方法
+     */ 
+	@Override
+	public void startActivity(Intent intent) {
+		super.startActivity(intent);
+		overridePendingTransition(R.anim.activity_in_heart , R.anim.activity_out_heart);
+	}  
 }

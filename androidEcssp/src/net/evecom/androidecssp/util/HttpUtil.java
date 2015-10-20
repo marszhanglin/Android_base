@@ -17,8 +17,6 @@ import android.content.SharedPreferences;
  */
 public class HttpUtil {  
 	
-    /**BASE_URL*/
-    public static final String BASE_URL = "http://192.168.3.100:8080/gssms/"; 
     /** BASE_PC_URL ForWebView*/ 
     public static final String BASE_PC_URL = "http://192.168.3.100:8080/gssms/";
     /** UPDATE_VERSION_XML */
@@ -43,20 +41,36 @@ public class HttpUtil {
      * 获取webip路径
      * @return
      */
-    public static String getPCURL(Context context){
-    	if(null==context){
-    		return "";
-    	} 
+    public static String getPCURL(){
     	HttpInfo httpInfo= HttpInfo.getInstance();;
     	if(null!=httpInfo){
-    		return "http://"+httpInfo.getIp().trim()+":"
-    				+httpInfo.getPort()+"/"+httpInfo.getProjectName()+"/";
+    		if(httpInfo.getPort()==0){ //端口号为0就是没有端口号
+    			return "http://"+httpInfo.getIp().trim()
+    					+"/"+httpInfo.getProjectName()+"/";
+    		}else{
+    			return "http://"+httpInfo.getIp().trim()+":"
+        				+httpInfo.getPort()+"/"+httpInfo.getProjectName()+"/";
+    		} 
     	}else{
     		return "";
     	}
     	
     }
  
+    
+    /**
+     * 获取webip路径
+     * @return
+     */
+    public static String getVersionXML(){
+    	HttpInfo httpInfo= HttpInfo.getInstance();;
+    	if(null!=httpInfo){ 
+    			return  httpInfo.getVersionxml();  
+    	}else{
+    		return "";
+    	}
+    	
+    }
     /**
      * 获取ip路径
      * @return
