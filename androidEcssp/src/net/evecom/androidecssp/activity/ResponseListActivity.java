@@ -2,10 +2,12 @@ package net.evecom.androidecssp.activity;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import net.evecom.androidecssp.R;
 import net.evecom.androidecssp.base.BaseActivity;
+import net.evecom.androidecssp.base.BaseModel;
 import net.evecom.androidecssp.bean.EventInfo;
 import net.evecom.androidecssp.bean.ProjectInfo;
 import net.evecom.androidecssp.bean.TaskInfo;
@@ -37,11 +39,11 @@ import android.widget.TextView;
 public class ResponseListActivity extends BaseActivity {
 
 	private ListView responseListView=null;
-	private List<TaskResponseInfo> taskResponseInfos=null;
+	private List<BaseModel> taskResponseInfos=null;
 	private String resutArray="";
-	private EventInfo eventInfo=null;
-	private ProjectInfo projectInfo=null;
-	private TaskInfo taskInfo=null;
+	private BaseModel eventInfo=null;
+	private BaseModel projectInfo=null;
+	private BaseModel taskInfo=null;
 	
 	
 	@Override
@@ -49,9 +51,9 @@ public class ResponseListActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.response_list_at);
 		Intent intent=getIntent();
-		eventInfo=(EventInfo) intent.getSerializableExtra("eventInfo");
-		projectInfo=(ProjectInfo) intent.getSerializableExtra("projectInfo");
-		taskInfo=(TaskInfo) intent.getSerializableExtra("taskInfo");
+		eventInfo=(BaseModel) getData("", intent);
+		projectInfo=(BaseModel) getData("projectInfo", intent);
+		taskInfo=(BaseModel) getData("taskInfo", intent);
 		init();
 	}
 	
@@ -68,10 +70,11 @@ public class ResponseListActivity extends BaseActivity {
 			@Override
 			public void run() {
 				Message message= new Message();
-				
+				HashMap<String, String> hashMap=new HashMap<String, String>();
+                hashMap.put("taskId", taskInfo.get("Id").toString());
 				try {
 					resutArray=connServerForResultPost("jfs/mobile/androidIndex/getTaskResponseByTaskId",
-							"taskId="+taskInfo.getId());
+					        hashMap);
 				} catch (ClientProtocolException e) {
 					message.what=MESSAGETYPE_02;
 					Log.e("mars", e.getMessage());
@@ -81,7 +84,7 @@ public class ResponseListActivity extends BaseActivity {
 				}
 				if(resutArray.length()>0){
 					try {
-						taskResponseInfos=getEvents(resutArray);
+						taskResponseInfos=getObjsInfo(resutArray);
 						if(null==taskResponseInfos){
 							message.what=MESSAGETYPE_02;
 						}else{
@@ -157,9 +160,9 @@ public class ResponseListActivity extends BaseActivity {
         /** MemberVariables */
         private LayoutInflater inflater;
         /** MemberVariables */
-        private List<TaskResponseInfo> list;
+        private List<BaseModel> list;
 
-        public MyListAdapter(Context context, List<TaskResponseInfo> list) {
+        public MyListAdapter(Context context, List<BaseModel> list) {
             this.context = context;
             inflater = LayoutInflater.from(context);
             this.list = list;
@@ -190,18 +193,14 @@ public class ResponseListActivity extends BaseActivity {
             TextView textViewEventType = (TextView) view.findViewById(R.id.list_item13_tv_2);
             TextView textViewEventArea = (TextView) view.findViewById(R.id.list_item13_tv_3);
             TextView textViewEventTime = (TextView) view.findViewById(R.id.list_item13_tv_4);
-            textViewEventName.setText("反馈标题：" + list.get(i).getResponsetitle());
-            textViewEventType.setText("反馈机构：" + list.get(i).getName());
-            textViewEventArea.setText("反馈内容：" + list.get(i).getResponsecon());
-            textViewEventTime.setText("反馈时间：" + list.get(i).getCreatetime()); 
+            textViewEventName.setText("反馈标题：" + list.get(i).get("responsetitle"));
+            textViewEventType.setText("反馈机构：" + list.get(i).get("name"));
+            textViewEventArea.setText("反馈内容：" + list.get(i).get("responsecon"));
+            textViewEventTime.setText("反馈时间：" + list.get(i).get("createtime")); 
             view.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-//					Intent intent=new Intent(getApplicationContext(), ProjectListActivity.class);
-//					intent.putExtra("eventInfo", list.get(i));
-//					startActivity(intent);
-//					EventListActivity.this.finish();
-					Log.v("mars", "点击了列表"+list.get(i).getResponsetitle());
+					Log.v("mars", "点击了列表"+list.get(i).get("responsetitle"));
 				}
 			});
             return view;

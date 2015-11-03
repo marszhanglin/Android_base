@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 import net.evecom.androidecssp.R;
 import net.evecom.androidecssp.util.HttpUtil;
@@ -17,12 +22,16 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -47,6 +56,8 @@ public class BaseActivity extends Activity {
     protected static final int MESSAGETYPE_05 = 0x0005;
     /** 数据状态 */
     protected static final int MESSAGETYPE_06 = 0x0006;
+    /** 自定义交互数据集 */
+    public static HashMap<Long, Object> contextHashMap = new HashMap<Long, Object>(); 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -151,13 +162,28 @@ public class BaseActivity extends Activity {
      * @throws ClientProtocolException
      * @throws IOException
      */
-    protected String connServerForResultPost(String strUrl, String entity_str) throws ClientProtocolException,
+    protected String connServerForResultPost(String strUrl, HashMap<String, String> entityMap) throws ClientProtocolException,
             IOException {
         String strResult = "";
         URL url = new URL(HttpUtil.getPCURL() +strUrl);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
-        byte[] entity = entity_str.getBytes();
+        StringBuilder entitySb = new StringBuilder("");
+        if(null==entityMap){
+            entityMap = new HashMap<String, String>();
+        } 
+        Object[] entityKeys = entityMap.keySet().toArray();
+        for(int i=0;i<entityKeys.length;i++){
+            String key=(String) entityKeys[i];
+            if(i==0){
+                entitySb.append(key+"="+entityMap.get(key));
+            }
+            else{
+                entitySb.append("&"+key+"="+entityMap.get(key));
+            }
+        }
+        byte[] entity = entitySb.toString().getBytes();
+        
         conn.setConnectTimeout(5000);
         conn.setDoOutput(true);
         conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
@@ -177,6 +203,66 @@ public class BaseActivity extends Activity {
     
     public void fh(View view){
     	this.finish();
+    }
+    
+    
+    /**
+     * 解析json对象数据 成baseModel
+     * 
+     */
+    public static BaseModel getObjInfo(String jsonString)
+            throws JSONException {
+        JSONObject jsonObject = new JSONObject(jsonString);
+        BaseModel baseModel = new BaseModel();
+        Iterator<String> iterators= jsonObject.keys();
+        for (int j = 0; iterators.hasNext(); j++) {
+          String key= iterators.next();
+          baseModel.set(key, jsonObject.get(key));
+         }
+        return baseModel;
+    }
+    
+    
+     
+    
+    /**
+     * 解析 json数组据 成baseModel
+     * 
+     */
+    public static List<BaseModel> getObjsInfo(String jsonString) throws JSONException {
+        List<BaseModel> list = new ArrayList<BaseModel>();
+        JSONArray jsonArray = null;
+        jsonArray = new JSONArray(jsonString);
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            BaseModel baseModel = new BaseModel();
+           Iterator<String> iterators= jsonObject.keys();
+           for (int j = 0; iterators.hasNext(); j++) {
+              String key= iterators.next();
+              baseModel.set(key, jsonObject.get(key));
+           }
+            list.add(baseModel);
+        }
+        return list;
+    }
+    /**
+     *  填充数据
+     * 
+     */
+    public static   Intent pushData(String string,BaseModel baseModel,Intent intent){
+        Long key = SystemClock.elapsedRealtime();
+        intent.putExtra(string, key);
+        contextHashMap.put(key, baseModel);
+        return intent;
+    }
+    
+    /**
+     *  获取数据
+     * 
+     */
+    public static Object getData(String string, Intent intent) {
+        Long key = intent.getLongExtra(string, 0L);
+        return contextHashMap.get(key);
     }
     
     /**

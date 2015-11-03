@@ -4,12 +4,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
 
 import net.evecom.androidecssp.R;
 import net.evecom.androidecssp.base.AfnailPictureActivity;
 import net.evecom.androidecssp.base.BaseActivity;
+import net.evecom.androidecssp.base.BaseModel;
 import net.evecom.androidecssp.base.ICallback;
 import net.evecom.androidecssp.base.UploadPictureActivity;
 import net.evecom.androidecssp.bean.EventInfo;
@@ -67,9 +69,9 @@ public class TaskResponseAddActivity extends BaseActivity {
 
 	private ListView imageListView;
 
-	private EventInfo eventInfo;
-	private ProjectInfo projectInfo;
-	private TaskInfo taskInfo;
+	private BaseModel eventInfo;
+	private BaseModel projectInfo;
+	private BaseModel taskInfo;
 
 	private String[] levestr;
 
@@ -85,9 +87,9 @@ public class TaskResponseAddActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.task_response_add_activity);
 		Intent intent = getIntent();
-		eventInfo = (EventInfo) intent.getSerializableExtra("eventInfo");
-		projectInfo = (ProjectInfo) intent.getSerializableExtra("projectInfo");
-		taskInfo = (TaskInfo) intent.getSerializableExtra("taskInfo");
+		eventInfo = (BaseModel) getData("eventInfo", intent);
+		projectInfo = (BaseModel) getData("projectInfo", intent);
+		taskInfo = (BaseModel) getData("taskInfo", intent);
 		init();
 		initdata();
 	}
@@ -99,7 +101,6 @@ public class TaskResponseAddActivity extends BaseActivity {
 		peopleeditText = (EditText) findViewById(R.id.task_response_people_et);
 		remarkeditText = (EditText) findViewById(R.id.task_response_remark_et);
 
-		// timeView=(TextView) findViewById(R.id.task_response_time_tv);
 		leveView = (TextView) findViewById(R.id.task_response_leve_tv);
 
 		imageListView = (ListView) findViewById(R.id.task_response_file_list);
@@ -298,43 +299,29 @@ public class TaskResponseAddActivity extends BaseActivity {
 					return null;
 				}
 			});
-			return;
-
+			return; 
 		default:
 			break;
 		}
-		/*
-		 * private EditText titleeditText; private EditText contenteditText;
-		 * private EditText keywordeditText; private EditText peopleeditText;
-		 * private EditText remarkeditText;
-		 * 
-		 * private TextView leveView;
-		 */
-		// eventInfo=(EventInfo) intent.getSerializableExtra("eventInfo");
-		// projectInfo=(ProjectInfo) intent.getSerializableExtra("projectInfo");
-		// taskInfo=(TaskInfo) intent.getSerializableExtra("taskInfo");
-		StringBuilder sb = new StringBuilder();
-		sb.append("eventid=" + eventInfo.getId());
-		sb.append("&responselevel=" + leveView.getText().toString());
-		sb.append("&responsetitle=" + titleeditText.getText().toString());
-		sb.append("&remark=" + remarkeditText.getText().toString());
-		sb.append("&responsedeptid="
-				+ ShareUtil.getString(getApplicationContext(), "PASSNAME",
-						"orgid", ""));
-		sb.append("&responsename="
-				+ ShareUtil.getString(getApplicationContext(), "PASSNAME",
-						"usernameCN", ""));
-		sb.append("&planid=" + projectInfo.getPlanid());
-		sb.append("&taskid=" + taskInfo.getId());
-		sb.append("&responsecon=" + contenteditText.getText().toString());
-		sb.append("&responseid="
-				+ ShareUtil.getString(getApplicationContext(), "PASSNAME",
-						"userid", ""));
-
-		postdata(sb.toString());
+		
+		HashMap<String, String> hashMap=new HashMap<String, String>();
+        hashMap.put("eventid", eventInfo.get("id").toString());
+        hashMap.put("responselevel", leveView.getText().toString());
+        hashMap.put("responsetitle", titleeditText.getText().toString());
+        hashMap.put("remark", remarkeditText.getText().toString());
+        hashMap.put("responsedeptid", ShareUtil.getString(getApplicationContext(), "PASSNAME",
+                "orgid", ""));
+        hashMap.put("responsename", ShareUtil.getString(getApplicationContext(), "PASSNAME",
+                "usernameCN", ""));
+        hashMap.put("planid", projectInfo.get("planid").toString());
+        hashMap.put("taskid", taskInfo.get("id").toString());
+        hashMap.put("responsecon", contenteditText.getText().toString());
+        hashMap.put("responseid", ShareUtil.getString(getApplicationContext(), "PASSNAME",
+                "userid", "")); 
+		postdata(hashMap);
 	}
 
-	private void postdata(final String entity) {
+	private void postdata(final HashMap<String, String> entity) {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {

@@ -2,12 +2,12 @@ package net.evecom.androidecssp.activity;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import net.evecom.androidecssp.R;
 import net.evecom.androidecssp.base.BaseActivity;
-import net.evecom.androidecssp.bean.EventInfo;
-import net.evecom.androidecssp.bean.ProjectInfo;
+import net.evecom.androidecssp.base.BaseModel;
 import net.evecom.androidecssp.bean.TaskInfo;
 
 import org.apache.http.client.ClientProtocolException;
@@ -39,19 +39,19 @@ import android.widget.TextView;
 public class TaskListActivity extends BaseActivity {
 
 	private ListView taskListView=null;
-	private List<TaskInfo> taskInfos=null;
+	private List<BaseModel> taskInfos=null;
 	private String resutArray="";
-	private EventInfo eventInfo=null;
-	private ProjectInfo projectInfo=null;
-	
+	private BaseModel eventInfo=null;
+	private BaseModel projectInfo=null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.task_list_at);
 		Intent intent=getIntent();
-		eventInfo=(EventInfo) intent.getSerializableExtra("eventInfo");
-		projectInfo=(ProjectInfo) intent.getSerializableExtra("projectInfo");
+		eventInfo=(BaseModel) getData("eventInfo", intent);
+		projectInfo=(BaseModel) getData("eventInfo", intent);
+		
 		init();
 	}
 	
@@ -70,8 +70,11 @@ public class TaskListActivity extends BaseActivity {
 				Message message= new Message();
 				
 				try {
+				    HashMap<String, String> hashMap=new HashMap<String, String>();
+                    hashMap.put("eventId", eventInfo.get("id").toString());
+                    hashMap.put("projectId", projectInfo.get("id").toString());
 					resutArray=connServerForResultPost("jfs/mobile/androidIndex/getTaskByEventIdAndProjectId",
-							"eventId="+eventInfo.getId()+"&projectId="+projectInfo.getId());
+					        hashMap);
 				} catch (ClientProtocolException e) {
 					message.what=MESSAGETYPE_02;
 					Log.e("mars", e.getMessage());
@@ -81,7 +84,7 @@ public class TaskListActivity extends BaseActivity {
 				}
 				if(resutArray.length()>0){
 					try {
-						taskInfos=getEvents(resutArray);
+						taskInfos=getObjsInfo(resutArray);
 						if(null==taskInfos){
 							message.what=MESSAGETYPE_02;
 						}else{
@@ -157,9 +160,9 @@ public class TaskListActivity extends BaseActivity {
         /** MemberVariables */
         private LayoutInflater inflater;
         /** MemberVariables */
-        private List<TaskInfo> list;
+        private List<BaseModel> list;
 
-        public MyListAdapter(Context context, List<TaskInfo> list) {
+        public MyListAdapter(Context context, List<BaseModel> list) {
             this.context = context;
             inflater = LayoutInflater.from(context);
             this.list = list;
@@ -190,10 +193,10 @@ public class TaskListActivity extends BaseActivity {
             TextView textViewEventType = (TextView) view.findViewById(R.id.list_item13_tv_2);
             TextView textViewEventArea = (TextView) view.findViewById(R.id.list_item13_tv_3);
             TextView textViewEventTime = (TextView) view.findViewById(R.id.list_item13_tv_4);
-            textViewEventName.setText("任务名称：" + list.get(i).getTaskname());
-            textViewEventType.setText("执行单位：" + list.get(i).getTaskdept());
-            textViewEventArea.setText("关键说明：" + list.get(i).getKeyword());
-            textViewEventTime.setText("创建时间：" + list.get(i).getCreatetime()); 
+            textViewEventName.setText("任务名称：" + list.get(i).get("taskname"));
+            textViewEventType.setText("执行单位：" + list.get(i).get("taskdept"));
+            textViewEventArea.setText("关键说明：" + list.get(i).get("keyword"));
+            textViewEventTime.setText("创建时间：" + list.get(i).get("createtime")); 
             view.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -204,9 +207,9 @@ public class TaskListActivity extends BaseActivity {
                         @Override
                         public void onClick(DialogInterface dia, int which) { 
                         	Intent intent=new Intent(getApplicationContext(), TaskResponseAddActivity.class);
-                        	intent.putExtra("eventInfo", eventInfo);
-        					intent.putExtra("projectInfo", projectInfo);
-        					intent.putExtra("taskInfo", list.get(i));
+                        	TaskResponseAddActivity.pushData("eventInfo", eventInfo, intent);
+                        	TaskResponseAddActivity.pushData("projectInfo", projectInfo, intent);
+                        	TaskResponseAddActivity.pushData("taskInfo", list.get(i), intent);
         					startActivity(intent);
                             dia.dismiss();
                         }
@@ -214,16 +217,16 @@ public class TaskListActivity extends BaseActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                         	Intent intent=new Intent(getApplicationContext(), ResponseListActivity.class);
-        					intent.putExtra("eventInfo", eventInfo);
-        					intent.putExtra("projectInfo", projectInfo);
-        					intent.putExtra("taskInfo", list.get(i));
+                        	ResponseListActivity.pushData("eventInfo", eventInfo, intent);
+                        	ResponseListActivity.pushData("projectInfo", projectInfo, intent);
+                        	ResponseListActivity.pushData("taskInfo", list.get(i), intent);
         					startActivity(intent);
                             dialog.dismiss();
                         }
                     }).create();
             delDia.show();
             
-					Log.v("mars", "点击了列表"+list.get(i).getTaskname());
+					Log.v("mars", "点击了列表"+list.get(i).get("Taskname"));
 				}
 			});
             return view;

@@ -2,11 +2,12 @@ package net.evecom.androidecssp.activity;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import net.evecom.androidecssp.R;
 import net.evecom.androidecssp.base.BaseActivity;
-import net.evecom.androidecssp.bean.EventInfo;
+import net.evecom.androidecssp.base.BaseModel;
 import net.evecom.androidecssp.bean.ProjectInfo;
 
 import org.apache.http.client.ClientProtocolException;
@@ -36,17 +37,16 @@ import android.widget.TextView;
 public class ProjectListActivity extends BaseActivity {
 
 	private ListView projectListView=null;
-	private List<ProjectInfo> projectInfos=null;
+	private List<BaseModel> projectInfos=null;
 	private String resutArray="";
-	
-	private EventInfo eventInfo=null;
+	private BaseModel eventInfo=null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.project_list_at);
 		Intent intent= getIntent();
-		eventInfo=(EventInfo) intent.getSerializableExtra("eventInfo");
+		eventInfo= (BaseModel) getData("eventInfo", intent);
 		init();
 		
 	}
@@ -66,7 +66,9 @@ public class ProjectListActivity extends BaseActivity {
 				Message message= new Message();
 				
 				try {
-					resutArray=connServerForResultPost("jfs/mobile/androidIndex/getAllProjectByeventId", "eventId="+eventInfo.getId());
+				    HashMap<String, String> hashMap=new HashMap<String, String>();
+				    hashMap.put("eventId", eventInfo.get("id").toString());
+					resutArray=connServerForResultPost("jfs/mobile/androidIndex/getAllProjectByeventId", hashMap);
 				} catch (ClientProtocolException e) {
 					message.what=MESSAGETYPE_02;
 					Log.e("mars", e.getMessage());
@@ -76,7 +78,7 @@ public class ProjectListActivity extends BaseActivity {
 				}
 				if(resutArray.length()>0){
 					try {
-						projectInfos=getjsons(resutArray);
+						projectInfos=getObjsInfo(resutArray);
 						if(null==projectInfos){
 							message.what=MESSAGETYPE_02;
 						}else{
@@ -151,9 +153,9 @@ public class ProjectListActivity extends BaseActivity {
         /** MemberVariables */
         private LayoutInflater inflater;
         /** MemberVariables */
-        private List<ProjectInfo> list;
+        private List<BaseModel> list;
 
-        public ProjectAdapter(Context context, List<ProjectInfo> list) {
+        public ProjectAdapter(Context context, List<BaseModel> list) {
             this.context = context;
             inflater = LayoutInflater.from(context);
             this.list = list;
@@ -182,32 +184,32 @@ public class ProjectListActivity extends BaseActivity {
             }
             ImageView imageViewProjectCode = (ImageView) view.findViewById(R.id.list_item_img);
             TextView textViewProjectName = (TextView) view.findViewById(R.id.list_item_tv); 
-            if(list.get(i).getProjectcode().equals("F4_2")){
+            if(list.get(i).get("projectcode").equals("F4_2")){
             	imageViewProjectCode.setImageResource(R.drawable.ljwg_dw_gzrz_aqjj);
-            }else if(list.get(i).getProjectcode().equals("F4_3")){
+            }else if(list.get(i).get("projectcode").equals("F4_3")){
             	imageViewProjectCode.setImageResource(R.drawable.ljwg_dw_gzrz_ryjz);
-            }else if(list.get(i).getProjectcode().equals("F4_4")){
+            }else if(list.get(i).get("projectcode").equals("F4_4")){
             	imageViewProjectCode.setImageResource(R.drawable.ljwg_dw_gzrz_xcqx);
-            }else if(list.get(i).getProjectcode().equals("F4_5")){
+            }else if(list.get(i).get("projectcode").equals("F4_5")){
             	imageViewProjectCode.setImageResource(R.drawable.ljwg_dw_gzrz_yzps);
-            }else if(list.get(i).getProjectcode().equals("F4_6")){
+            }else if(list.get(i).get("projectcode").equals("F4_6")){
             	imageViewProjectCode.setImageResource(R.drawable.ljwg_dw_gzrz_ryss);
-            }else if(list.get(i).getProjectcode().equals("F4_7")){
+            }else if(list.get(i).get("projectcode").equals("F4_7")){
             	imageViewProjectCode.setImageResource(R.drawable.ljwg_dw_gzrz_xcjk);
-            }else if(list.get(i).getProjectcode().equals("F4_8")){
+            }else if(list.get(i).get("projectcode").equals("F4_8")){
             	imageViewProjectCode.setImageResource(R.drawable.ljwg_dw_gzrz_zjzc);
-            }else if(list.get(i).getProjectcode().equals("F4_9")){
+            }else if(list.get(i).get("projectcode").equals("F4_9")){
             	imageViewProjectCode.setImageResource(R.drawable.ljwg_dw_gzrz_aqjj);
             } 
-            textViewProjectName.setText(list.get(i).getProjectname());
+            textViewProjectName.setText(list.get(i).get("projectname").toString());
             view.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					Intent intent=new Intent(getApplicationContext(), TaskListActivity.class);
-					intent.putExtra("eventInfo", eventInfo);
-					intent.putExtra("projectInfo", list.get(i));
+					TaskListActivity.pushData("eventInfo", eventInfo, intent);
+					TaskListActivity.pushData("projectInfo", list.get(i), intent);
 					startActivity(intent);
-					Log.v("mars", "点击了列表"+list.get(i).getProjectname());
+					Log.v("mars", "点击了列表"+list.get(i).get("projectname"));
 				}
 			});
             return view;

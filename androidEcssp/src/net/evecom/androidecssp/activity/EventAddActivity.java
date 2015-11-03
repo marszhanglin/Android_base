@@ -4,12 +4,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
 
 import net.evecom.androidecssp.R;
 import net.evecom.androidecssp.base.AfnailPictureActivity;
 import net.evecom.androidecssp.base.BaseActivity;
+import net.evecom.androidecssp.base.BaseModel;
 import net.evecom.androidecssp.base.UploadPictureActivity;
 import net.evecom.androidecssp.bean.EventInfo;
 import net.evecom.androidecssp.bean.FileManageBean;
@@ -276,30 +279,24 @@ public class EventAddActivity extends BaseActivity {
 		if(checkifstop()){
 			return ;
 		}  
-		
-		StringBuilder sb = new StringBuilder();
-		sb.append("eventlever=" +leveView.getText().toString() );
-		sb.append("&eventname=" + nameeditText.getText().toString());
-		sb.append("&happenaddress=" + addresseditText.getText().toString());
-		sb.append("&eventcontent=" + contenteditText.getText().toString());
-		sb.append("&belongunitid="
-				+ ShareUtil.getString(getApplicationContext(), "PASSNAME",
-						"orgid", ""));
-		sb.append("&reporterperson=" + personeditText.getText().toString());
-		sb.append("&reportertel=" + phoneeditText.getText().toString());
-		sb.append("&eventstatus=" + stateView.getText().toString());
-		
-		
-		sb.append("&gisy="
-				+ ShareUtil.getString(getApplicationContext(), "GPS",
-						"latitude", "")); 
-		sb.append("&gisx="
-				+ ShareUtil.getString(getApplicationContext(), "GPS",
-						"longitude", "")); 
-		postdata(sb.toString());
+		HashMap<String, String> hashMap=new HashMap<String, String>();
+		hashMap.put("eventlever", leveView.getText().toString());
+		hashMap.put("eventname", nameeditText.getText().toString());
+		hashMap.put("happenaddress", addresseditText.getText().toString());
+		hashMap.put("eventcontent", contenteditText.getText().toString());
+		hashMap.put("belongunitid", ShareUtil.getString(getApplicationContext(), "PASSNAME",
+                "orgid", ""));
+		hashMap.put("reporterperson", personeditText.getText().toString());
+		hashMap.put("reportertel", phoneeditText.getText().toString());
+		hashMap.put("eventstatus", stateView.getText().toString());
+		hashMap.put("gisy", ShareUtil.getString(getApplicationContext(), "GPS",
+                "latitude", ""));
+		hashMap.put("gisx", ShareUtil.getString(getApplicationContext(), "GPS",
+                "longitude", ""));
+		postdata(hashMap);
 	}
 
-	private void postdata(final String entity) {
+	private void postdata(final HashMap<String, String> entity) {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -318,9 +315,9 @@ public class EventAddActivity extends BaseActivity {
 					message.what = MESSAGETYPE_01;
 					String eventId = "";
 					try {
-						EventInfo eventInfo = getEventInfo(saveResult);
+						BaseModel eventInfo = getObjInfo(saveResult);
 						if (null != eventInfo) {
-							eventId = eventInfo.getId();
+							eventId = eventInfo.get("id");
 						}
 					} catch (JSONException e) {
 						Log.e("mars", e.getMessage());
@@ -336,18 +333,7 @@ public class EventAddActivity extends BaseActivity {
 
 	}
 
-	/**
-	 * 解析反馈json数据
-	 * 
-	 */
-	public static EventInfo getEventInfo(String jsonString)
-			throws JSONException {
-		JSONObject jsonObject = new JSONObject(jsonString);
-		EventInfo eventInfo = new EventInfo();
-		eventInfo.setId(jsonObject.getString("id"));
-		eventInfo.setEventname("eventname");
-		return eventInfo;
-	}
+	
 
 	/**
 	 * 上传图片

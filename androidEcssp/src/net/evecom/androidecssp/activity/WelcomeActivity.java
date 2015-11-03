@@ -1,6 +1,7 @@
 package net.evecom.androidecssp.activity;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -111,7 +112,7 @@ public class WelcomeActivity extends BaseActivity {
 			@Override
 			public void run() {
 				try { 
-					dictResult=connServerForResultPost("jfs/mobile/androidIndex/gitSysDicts", "");
+					dictResult=connServerForResultPost("jfs/mobile/androidIndex/gitSysDicts", null);
 				} catch (ClientProtocolException e) {
 					Log.e("mars", "数据字典获取："+e.getMessage());
 				} catch (IOException e) {
@@ -312,7 +313,7 @@ public class WelcomeActivity extends BaseActivity {
 		loginProgressDialog = ProgressDialog.show(this, "提示", "正在登入，请稍等...");
 		loginProgressDialog.setCancelable(true);
 		Log.v("mars", username+"/"+password);//加密
-		 
+		
 		
 		
 		
@@ -324,11 +325,12 @@ public class WelcomeActivity extends BaseActivity {
 				try {
 					//登陆线程通信实体  在线程中创建
 					Message loginMessage=new Message();
-					
+					HashMap<String, String> hashMap=new HashMap<String, String>();
+			        hashMap.put("username",username);
+			        hashMap.put("password",password.trim());
+			        hashMap.put("imei",PhoneUtil.getInstance().getImei(getApplicationContext()));
 					loginResult = connServerForResultPost("jfs/mobile/androidIndex/login",
-							"username="+username
-							+"&password="+password.trim()
-							+"&imei="+PhoneUtil.getInstance().getImei(getApplicationContext()));
+							hashMap);
 					
 					//如果接受到返回数据 否则消息提示
 					if(loginResult.length()>5){

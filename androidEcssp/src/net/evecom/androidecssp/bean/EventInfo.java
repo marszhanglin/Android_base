@@ -2,9 +2,13 @@ package net.evecom.androidecssp.bean;
 
 import java.io.Serializable;
 
-public class EventInfo implements Serializable{
+public class EventInfo  implements Serializable{
 	
-	private String id;
+	/**
+     * √Ë ˆ
+     */
+    private static final long serialVersionUID = 2554459493557977955L;
+    private String id;
 	private String eventname;
 	private String happendate;
 	private String typename;
