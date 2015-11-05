@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import net.evecom.androidecssp.R;
 import net.evecom.androidecssp.util.HttpUtil;
@@ -28,6 +27,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -57,7 +57,9 @@ public class BaseActivity extends Activity {
     /** 数据状态 */
     protected static final int MESSAGETYPE_06 = 0x0006;
     /** 自定义交互数据集 */
-    public static HashMap<Long, Object> contextHashMap = new HashMap<Long, Object>(); 
+    public static HashMap<Long, Object> contextHashMap = new HashMap<Long, Object>();
+    /** 实体对象 */
+    public static BaseActivity instance = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -66,8 +68,7 @@ public class BaseActivity extends Activity {
 				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		//不要标题
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		
-		
+		instance=this;
 	}
 	
 	
@@ -113,13 +114,6 @@ public class BaseActivity extends Activity {
         });
         builder1.show();
     }
-    /*DialogToast("aasdasdasd",new ICallback() { 
-		@Override
-		public Object execute() {
-			toast("回调了", 1);
-			return null;
-		}
-	});*/
     
     
     /** 土司 */

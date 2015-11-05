@@ -10,6 +10,7 @@ import java.util.List;
 
 import net.evecom.androidecssp.R;
 import net.evecom.androidecssp.base.BaseActivity;
+import net.evecom.androidecssp.base.BaseWebActivity;
 import net.evecom.androidecssp.bean.HandlerView;
 import net.evecom.androidecssp.bean.Picture;
 import android.annotation.SuppressLint;
@@ -76,12 +77,10 @@ public class MainMenuActivity extends BaseActivity {
                     case 2: // Òþ»¼ÅÅ²é
                     	intent=new Intent(getApplicationContext(), EventListActivity.class);
                     	startActivity(intent);
-//                        intent = new Intent(MainMenuActivity.this, Web2Activity.class);
-//                        startActivity(intent);
                         break;
                     case 3: //
-//                        intent = new Intent(MainMenuActivity.this, Web3Activity.class);
-//                        startActivity(intent);
+                        intent = new Intent(MainMenuActivity.this, BaseWebActivity.class);
+                        startActivity(intent);
                         break;
                     case 4:
 //                        intent = new Intent(MainMenuActivity.this, DailyWorkActivity.class);

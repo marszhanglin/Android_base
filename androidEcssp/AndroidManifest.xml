@@ -42,7 +42,8 @@
             android:theme="@android:style/Theme.NoTitleBar"></activity>
         <activity android:name="net.evecom.androidecssp.gps.TDTLocation222"
             android:theme="@android:style/Theme.NoTitleBar"></activity>
-        
+        <activity android:name="net.evecom.androidecssp.base.BaseWebActivity"
+            android:theme="@android:style/Theme.NoTitleBar"></activity>
         
         
         
@@ -64,6 +65,8 @@
             android:theme="@android:style/Theme.NoTitleBar"></activity>
         <activity android:name="net.evecom.androidecssp.activity.SystemSetingActivity"
             android:theme="@android:style/Theme.NoTitleBar"></activity>
+        
+        
     </application>
 
 </manifest>
