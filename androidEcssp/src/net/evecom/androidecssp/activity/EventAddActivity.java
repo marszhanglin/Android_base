@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -14,7 +13,6 @@ import net.evecom.androidecssp.base.AfnailPictureActivity;
 import net.evecom.androidecssp.base.BaseActivity;
 import net.evecom.androidecssp.base.BaseModel;
 import net.evecom.androidecssp.base.UploadPictureActivity;
-import net.evecom.androidecssp.bean.EventInfo;
 import net.evecom.androidecssp.bean.FileManageBean;
 import net.evecom.androidecssp.gps.TDTLocation222;
 import net.evecom.androidecssp.util.HttpUtil;
@@ -27,7 +25,6 @@ import net.tsz.afinal.http.AjaxParams;
 
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -280,18 +277,18 @@ public class EventAddActivity extends BaseActivity {
 			return ;
 		}  
 		HashMap<String, String> hashMap=new HashMap<String, String>();
-		hashMap.put("eventlever", leveView.getText().toString());
-		hashMap.put("eventname", nameeditText.getText().toString());
-		hashMap.put("happenaddress", addresseditText.getText().toString());
-		hashMap.put("eventcontent", contenteditText.getText().toString());
-		hashMap.put("belongunitid", ShareUtil.getString(getApplicationContext(), "PASSNAME",
+		hashMap.put("infoReception.eventlever", leveView.getText().toString());
+		hashMap.put("infoReception.eventname", nameeditText.getText().toString());
+		hashMap.put("infoReception.happenaddress", addresseditText.getText().toString());
+		hashMap.put("infoReception.eventcontent", contenteditText.getText().toString());
+		hashMap.put("infoReception.belongunitid", ShareUtil.getString(getApplicationContext(), "PASSNAME",
                 "orgid", ""));
-		hashMap.put("reporterperson", personeditText.getText().toString());
-		hashMap.put("reportertel", phoneeditText.getText().toString());
-		hashMap.put("eventstatus", stateView.getText().toString());
-		hashMap.put("gisy", ShareUtil.getString(getApplicationContext(), "GPS",
+		hashMap.put("infoReception.reporterperson", personeditText.getText().toString());
+		hashMap.put("infoReception.reportertel", phoneeditText.getText().toString());
+		hashMap.put("infoReception.eventstatus", stateView.getText().toString());
+		hashMap.put("infoReception.gisy", ShareUtil.getString(getApplicationContext(), "GPS",
                 "latitude", ""));
-		hashMap.put("gisx", ShareUtil.getString(getApplicationContext(), "GPS",
+		hashMap.put("infoReception.gisx", ShareUtil.getString(getApplicationContext(), "GPS",
                 "longitude", ""));
 		postdata(hashMap);
 	}
@@ -461,7 +458,7 @@ public class EventAddActivity extends BaseActivity {
 		}
 		if (gpsView.getText().toString().trim().length() <16 ) {
 			DialogToastNoCall("请输打开GPS重新定位！");
-			return true;
+//			return true;
 		}
 		if (leveView.getText().toString().trim().length() == 0) {
 			DialogToastNoCall("请选择事件级别！");

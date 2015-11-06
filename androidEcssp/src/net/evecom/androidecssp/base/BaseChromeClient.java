@@ -1,8 +1,8 @@
 package net.evecom.androidecssp.base;
 
 import net.evecom.androidecssp.R;
+import net.evecom.androidecssp.view.LineProgressBarWebView;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
@@ -17,6 +17,7 @@ import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 /**
  * 
@@ -141,6 +142,16 @@ public class BaseChromeClient extends WebChromeClient {
 
     @Override
     public void onProgressChanged(WebView view, int newProgress) {
+        
+        System.out.println(newProgress);
+        ProgressBar bar =context.lineProgressBar; 
+        if(newProgress == 100){
+            bar.setVisibility(View.GONE);
+        } else{
+            if(bar.getVisibility()==View.GONE)
+                bar.setVisibility(View.VISIBLE);
+            bar.setProgress(newProgress);
+        }
         super.onProgressChanged(view, newProgress);
     }
 
@@ -166,4 +177,7 @@ public class BaseChromeClient extends WebChromeClient {
         callback.invoke(origin, true, false);
         super.onGeolocationPermissionsShowPrompt(origin, callback);
     }
+    
+    
+    
 }

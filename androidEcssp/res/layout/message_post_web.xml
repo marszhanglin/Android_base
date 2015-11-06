@@ -11,16 +11,25 @@
       <ImageView android:id="@+id/image_view_at_web"
      android:layout_width="fill_parent" 
      android:layout_height="fill_parent" 
-     android:visibility="gone"
-      android:layout_marginBottom="55dp"
-     android:src="@drawable/web_ljcs"/>
-     <WebView 
+     android:visibility="gone" 
+     android:src="@drawable/web_ljcs"/> 
+     <ProgressBar 
+         style="?android:attr/progressBarStyleHorizontal"
+         android:id="@+id/webview_progress_id"
+         android:layout_width="fill_parent"
+         android:max="100"
+         android:layout_height="3dp"  
+         />
+   <WebView
      android:id="@+id/wv_oauth_message" 
      android:layout_width="fill_parent" 
      android:layout_height="fill_parent"
       android:focusable="false"
       android:background="@drawable/cbj3"
-       /> 
+      android:layout_marginTop="3dp"
+       />  
+    
+    
       <!-- <RelativeLayout
         android:id="@+id/main_bottom"
         android:layout_width="match_parent"

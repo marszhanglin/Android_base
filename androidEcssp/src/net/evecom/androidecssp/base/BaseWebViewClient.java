@@ -34,15 +34,15 @@ public class BaseWebViewClient extends WebViewClient{
     @Override
     public void onPageFinished(final WebView view, String url) {
         view.setVisibility(View.VISIBLE);
-        if (context.dialog != null)
-            context.dialog.dismiss();
+//        if (context.dialog != null)
+//            context.dialog.dismiss();
     }
 
     @Override
     public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
         context.toast("onPageFinished" + failingUrl, 1);
-        if (context.dialog != null)
-            context.dialog.dismiss();
+//        if (context.dialog != null)
+//            context.dialog.dismiss();
         view.clearView();
         view.setVisibility(View.GONE);
         context.imageView.setVisibility(View.VISIBLE);

@@ -32,35 +32,25 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.DialogInterface.OnDismissListener;
-import android.content.DialogInterface.OnKeyListener;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.DownloadListener;
-import android.webkit.GeolocationPermissions;
-import android.webkit.JsPromptResult;
-import android.webkit.JsResult;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.ZoomDensity;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 /**
@@ -73,7 +63,7 @@ public class BaseWebActivity extends BaseActivity {
     /** MemberVariables */
     private WebView webView;
     /** MemberVariables */
-    ProgressDialog dialog = null;
+//    ProgressDialog dialog = null;
     /** MemberVariables */
     protected Context mContext;
     /** 分页 */
@@ -82,17 +72,18 @@ public class BaseWebActivity extends BaseActivity {
     private AlertDialog dialogPress;
     /** 图片 */
     public ImageView imageView;
-
+    /** lineProgressBar */
+    public ProgressBar lineProgressBar;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
         temp = HttpUtil.getPageSize(this);
         setContentView(R.layout.message_post_web);
-        dialog = ProgressDialog.show(BaseWebActivity.this, null, "正在获取，请稍后..");
-        dialog.setCancelable(true);
+//        dialog = ProgressDialog.show(BaseWebActivity.this, null, "正在获取，请稍后..");
+//        dialog.setCancelable(true);
         
-        
+        lineProgressBar =(ProgressBar) findViewById(R.id.webview_progress_id);
         imageView = (ImageView) findViewById(R.id.image_view_at_web);
         webView = (WebView) this.findViewById(R.id.wv_oauth_message);
         CookieSyncManager.createInstance(this);
@@ -162,8 +153,8 @@ public class BaseWebActivity extends BaseActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // TODO Auto-generated method stub
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            if (dialog != null)
-                dialog.dismiss();
+//            if (dialog != null)
+//                dialog.dismiss();
             return true;
         }
         return super.onKeyDown(keyCode, event);

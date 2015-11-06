@@ -27,7 +27,6 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -265,7 +264,7 @@ public class BaseActivity extends Activity {
     @Override
     public void finish(){
     	super.finish();
-    	overridePendingTransition(R.anim.activity_in_heart , R.anim.activity_out_heart);
+//    	overridePendingTransition(R.anim.activity_in_heart , R.anim.activity_out_heart);
     } 
     
     /**
@@ -274,6 +273,7 @@ public class BaseActivity extends Activity {
 	@Override
 	public void startActivity(Intent intent) {
 		super.startActivity(intent);
-		overridePendingTransition(R.anim.activity_in_heart , R.anim.activity_out_heart);
+//		overridePendingTransition(R.anim.activity_in_heart , R.anim.activity_out_heart);
+	
 	}  
 }
