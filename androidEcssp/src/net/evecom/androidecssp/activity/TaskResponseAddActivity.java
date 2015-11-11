@@ -14,10 +14,7 @@ import net.evecom.androidecssp.base.BaseActivity;
 import net.evecom.androidecssp.base.BaseModel;
 import net.evecom.androidecssp.base.ICallback;
 import net.evecom.androidecssp.base.UploadPictureActivity;
-import net.evecom.androidecssp.bean.EventInfo;
 import net.evecom.androidecssp.bean.FileManageBean;
-import net.evecom.androidecssp.bean.ProjectInfo;
-import net.evecom.androidecssp.bean.TaskInfo;
 import net.evecom.androidecssp.bean.TaskResponseInfo;
 import net.evecom.androidecssp.util.HttpUtil;
 import net.evecom.androidecssp.util.ShareUtil;
@@ -236,26 +233,6 @@ public class TaskResponseAddActivity extends BaseActivity {
 					intent.putExtra("URI", list.get(i).getFile_URL());
 					intent.putExtra("File_Id", list.get(i).getFile_ID());
 					startActivityForResult(intent, 2);
-					/*
-					 * if (FILE_TYPE_PIC_01.equals(list.get(i).getFile_Flag()))
-					 * { Intent intent = new Intent(getApplicationContext(),
-					 * AfnailPictureActivity.class); intent.putExtra("URI",
-					 * list.get(i).getFile_URL()); intent.putExtra("File_Id",
-					 * list.get(i).getFile_ID()); startActivityForResult(intent,
-					 * 4); } else if
-					 * (FILE_TYPE_VIDEO_02.equals(list.get(i).getFile_Flag())) {
-					 * Intent intent = new Intent(getApplicationContext(),
-					 * AfinalVideoActivity.class); intent.putExtra("URI",
-					 * list.get(i).getFile_URL()); intent.putExtra("File_Id",
-					 * list.get(i).getFile_ID()); startActivityForResult(intent,
-					 * 4); } else if
-					 * (FILE_TYPE_AUDIO_03.equals(list.get(i).getFile_Flag())) {
-					 * Intent intent = new Intent(getApplicationContext(),
-					 * AfinalAudioActivity.class); intent.putExtra("URI",
-					 * list.get(i).getFile_URL()); intent.putExtra("File_Id",
-					 * list.get(i).getFile_ID()); startActivityForResult(intent,
-					 * 4); }
-					 */
 
 				}
 			});
@@ -305,18 +282,18 @@ public class TaskResponseAddActivity extends BaseActivity {
 		}
 		
 		HashMap<String, String> hashMap=new HashMap<String, String>();
-        hashMap.put("eventid", eventInfo.get("id").toString());
-        hashMap.put("responselevel", leveView.getText().toString());
-        hashMap.put("responsetitle", titleeditText.getText().toString());
-        hashMap.put("remark", remarkeditText.getText().toString());
-        hashMap.put("responsedeptid", ShareUtil.getString(getApplicationContext(), "PASSNAME",
+        hashMap.put("planEventTaskResponse.eventid", eventInfo.get("id").toString());
+        hashMap.put("planEventTaskResponse.responselevel", leveView.getText().toString());
+        hashMap.put("planEventTaskResponse.responsetitle", titleeditText.getText().toString());
+        hashMap.put("planEventTaskResponse.remark", remarkeditText.getText().toString());
+        hashMap.put("planEventTaskResponse.responsedeptid", ShareUtil.getString(getApplicationContext(), "PASSNAME",
                 "orgid", ""));
-        hashMap.put("responsename", ShareUtil.getString(getApplicationContext(), "PASSNAME",
+        hashMap.put("planEventTaskResponse.responsename", ShareUtil.getString(getApplicationContext(), "PASSNAME",
                 "usernameCN", ""));
-        hashMap.put("planid", projectInfo.get("planid").toString());
-        hashMap.put("taskid", taskInfo.get("id").toString());
-        hashMap.put("responsecon", contenteditText.getText().toString());
-        hashMap.put("responseid", ShareUtil.getString(getApplicationContext(), "PASSNAME",
+        hashMap.put("planEventTaskResponse.planid", projectInfo.get("planid").toString());
+        hashMap.put("planEventTaskResponse.taskid", taskInfo.get("id").toString());
+        hashMap.put("planEventTaskResponse.responsecon", contenteditText.getText().toString());
+        hashMap.put("planEventTaskResponse.responseid", ShareUtil.getString(getApplicationContext(), "PASSNAME",
                 "userid", "")); 
 		postdata(hashMap);
 	}
@@ -328,7 +305,7 @@ public class TaskResponseAddActivity extends BaseActivity {
 				Message message = new Message();
 				try {
 					saveResult = connServerForResultPost(
-							"jfs/mobile/androidIndex/taskResponseAdd", entity);
+							"jfs/ecssp/mobile/taskresponseCtr/taskResponseAdd", entity);
 				} catch (ClientProtocolException e) {
 					message.what = MESSAGETYPE_02;
 					Log.e("mars", e.getMessage());
@@ -347,7 +324,9 @@ public class TaskResponseAddActivity extends BaseActivity {
 					} catch (JSONException e) {
 						Log.e("mars", e.getMessage());
 					}
-					postImage(responseid);
+					HashMap<String, String> hashMap = new HashMap<String, String>();
+					hashMap.put("taskresponseId", responseid);
+					postImage(hashMap,fileList,"jfs/ecssp/mobile/taskresponseCtr/taskResponseFileSave");
 				} else {
 					message.what = MESSAGETYPE_02;
 				}
@@ -375,7 +354,7 @@ public class TaskResponseAddActivity extends BaseActivity {
 	 * 上传图片
 	 * 
 	 * @param taskresponseId
-	 */
+	 *//*
 	private void postImage(String taskresponseId) {
 		if (null == taskresponseId || taskresponseId.length() < 1) {
 			return;
@@ -417,7 +396,7 @@ public class TaskResponseAddActivity extends BaseActivity {
 						Log.v("mars", "反馈文件上传成功:"+t);
 					}
 				});
-	}
+	}*/
 
 	/**
 	 * 消息处理机制

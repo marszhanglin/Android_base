@@ -1,7 +1,5 @@
 package net.evecom.androidecssp.activity;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,13 +13,9 @@ import net.evecom.androidecssp.base.BaseModel;
 import net.evecom.androidecssp.base.UploadPictureActivity;
 import net.evecom.androidecssp.bean.FileManageBean;
 import net.evecom.androidecssp.gps.TDTLocation222;
-import net.evecom.androidecssp.util.HttpUtil;
 import net.evecom.androidecssp.util.ShareUtil;
 import net.evecom.androidecssp.util.UiUtil;
 import net.tsz.afinal.FinalDb;
-import net.tsz.afinal.FinalHttp;
-import net.tsz.afinal.http.AjaxCallBack;
-import net.tsz.afinal.http.AjaxParams;
 
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
@@ -78,9 +72,6 @@ public class EventAddActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.event_add_activity);
-		/*Intent intent = getIntent(); 
-		
-		*/
 		init();
 		initdata();
 	}
@@ -242,26 +233,6 @@ public class EventAddActivity extends BaseActivity {
 					intent.putExtra("URI", list.get(i).getFile_URL());
 					intent.putExtra("File_Id", list.get(i).getFile_ID());
 					startActivityForResult(intent, 2);
-					/*
-					 * if (FILE_TYPE_PIC_01.equals(list.get(i).getFile_Flag()))
-					 * { Intent intent = new Intent(getApplicationContext(),
-					 * AfnailPictureActivity.class); intent.putExtra("URI",
-					 * list.get(i).getFile_URL()); intent.putExtra("File_Id",
-					 * list.get(i).getFile_ID()); startActivityForResult(intent,
-					 * 4); } else if
-					 * (FILE_TYPE_VIDEO_02.equals(list.get(i).getFile_Flag())) {
-					 * Intent intent = new Intent(getApplicationContext(),
-					 * AfinalVideoActivity.class); intent.putExtra("URI",
-					 * list.get(i).getFile_URL()); intent.putExtra("File_Id",
-					 * list.get(i).getFile_ID()); startActivityForResult(intent,
-					 * 4); } else if
-					 * (FILE_TYPE_AUDIO_03.equals(list.get(i).getFile_Flag())) {
-					 * Intent intent = new Intent(getApplicationContext(),
-					 * AfinalAudioActivity.class); intent.putExtra("URI",
-					 * list.get(i).getFile_URL()); intent.putExtra("File_Id",
-					 * list.get(i).getFile_ID()); startActivityForResult(intent,
-					 * 4); }
-					 */
 
 				}
 			});
@@ -293,6 +264,13 @@ public class EventAddActivity extends BaseActivity {
 		postdata(hashMap);
 	}
 
+	/**
+	 * 
+	 * 描述 postdata
+	 * @author Mars zhang
+	 * @created 2015-11-10 下午4:13:51
+	 * @param entity
+	 */
 	private void postdata(final HashMap<String, String> entity) {
 		new Thread(new Runnable() {
 			@Override
@@ -300,7 +278,7 @@ public class EventAddActivity extends BaseActivity {
 				Message message = new Message();
 				try {
 					saveResult = connServerForResultPost(
-							"jfs/mobile/androidIndex/EventAdd", entity);
+							"jfs/ecssp/mobile/eventCtr/EventAdd", entity);
 				} catch (ClientProtocolException e) {
 					message.what = MESSAGETYPE_02;
 					Log.e("mars", e.getMessage());
@@ -319,7 +297,9 @@ public class EventAddActivity extends BaseActivity {
 					} catch (JSONException e) {
 						Log.e("mars", e.getMessage());
 					}
-					postImage(eventId);
+					HashMap<String, String> map=new HashMap<String, String>();
+					map.put("eventId", eventId);
+					postImage(map,fileList,"jfs/ecssp/mobile/eventCtr/eventFileSave");
 				} else {
 					message.what = MESSAGETYPE_02;
 				}
@@ -327,57 +307,11 @@ public class EventAddActivity extends BaseActivity {
 				saveHandler.sendMessage(message);
 			}
 		}).start();
-
 	}
 
 	
 
-	/**
-	 * 上传图片
-	 * 
-	 * @param taskresponseId
-	 */
-	private void postImage(String eventId) {
-		if (null == eventId || eventId.length() < 1) {
-			return;
-		}
-		if(null==fileList||fileList.size()==0){
-			return;
-		}
-		AjaxParams params = new AjaxParams();
-		params.put("eventId", eventId);
-		for (int i = 0; i < fileList.size(); i++) {
-			try {
-				params.put("file" + i, new File(fileList.get(i).getFile_URL()));
-			} catch (FileNotFoundException e) {
-				if (null != e) {
-					e.printStackTrace();
-				}
-			} // 上传文件
-		}
-		FinalHttp fh = new FinalHttp();
-		fh.post(HttpUtil.getPCURL()
-				+ "jfs/mobile/androidIndex/eventFileSave", params,
-				new AjaxCallBack<String>() {
-					@Override
-					public void onLoading(long count, long current) {
-						Log.v("mars", current + "/" + count);
-					}
 
-					@Override
-					public void onFailure(Throwable t, int errorNo,
-							String strMsg) {
-						Log.v("mars", "图片保存失败，请检查网络是否可用" );
-						super.onFailure(t, errorNo, strMsg);
-					}
-
-					@Override
-					public void onSuccess(String t) {
-						super.onSuccess(t);
-						Log.v("mars", "事件文件上传成功:"+t);
-					}
-				});
-	}
 
 	/**
 	 * 消息处理机制

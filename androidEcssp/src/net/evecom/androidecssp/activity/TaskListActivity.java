@@ -50,7 +50,7 @@ public class TaskListActivity extends BaseActivity {
 		setContentView(R.layout.task_list_at);
 		Intent intent=getIntent();
 		eventInfo=(BaseModel) getData("eventInfo", intent);
-		projectInfo=(BaseModel) getData("eventInfo", intent);
+		projectInfo=(BaseModel) getData("projectInfo", intent);
 		
 		init();
 	}
@@ -73,7 +73,8 @@ public class TaskListActivity extends BaseActivity {
 				    HashMap<String, String> hashMap=new HashMap<String, String>();
                     hashMap.put("eventId", eventInfo.get("id").toString());
                     hashMap.put("projectId", projectInfo.get("id").toString());
-					resutArray=connServerForResultPost("jfs/mobile/androidIndex/getTaskByEventIdAndProjectId",
+                    System.out.println(hashMap.values().toArray().toString());
+					resutArray=connServerForResultPost("jfs/ecssp/mobile/taskresponseCtr/getTaskByEventIdAndProjectId",
 					        hashMap);
 				} catch (ClientProtocolException e) {
 					message.what=MESSAGETYPE_02;

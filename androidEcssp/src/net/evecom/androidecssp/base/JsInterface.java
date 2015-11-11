@@ -1,6 +1,8 @@
 package net.evecom.androidecssp.base;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Handler;
 import android.webkit.JavascriptInterface;
 /**
@@ -33,6 +35,15 @@ public final class JsInterface {
             }
         });
         return strmsg;
+    } 
+    
+    
+    @JavascriptInterface
+    public void saveToSP(final String fileName ,final String key ,final String value ){
+         SharedPreferences sp = BaseWebActivity.instance.getSharedPreferences(fileName, Context.MODE_PRIVATE);
+         Editor editor= sp.edit();
+         editor.putString(key, value);
+         editor.commit();
     } 
 
 }

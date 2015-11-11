@@ -97,7 +97,7 @@ public class SystemSetingActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.system_seting);
-        spPhone = getApplicationContext().getSharedPreferences("Phone", MODE_PRIVATE);
+        spPhone = getApplicationContext().getSharedPreferences("PASSNAME", MODE_PRIVATE);
 
         flow_size = (TextView) findViewById(R.id.flow_size);
         long LJWG_Rx = (TrafficStats.getUidRxBytes(android.os.Process.myUid()) == TrafficStats.UNSUPPORTED ? 0
@@ -120,10 +120,10 @@ public class SystemSetingActivity extends Activity {
 
         jzmmCheckBox = (CheckBox) findViewById(R.id.main_tab_setting_checkbox_jzmm);
         zddrCheckBox = (CheckBox) findViewById(R.id.main_tab_setting_checkbox_zddr);
-        if ("1".equals(spPhone.getString("isJZMM", "0"))) {
+        if ("1".equals(spPhone.getString("rembernp", "0"))) {
             jzmmCheckBox.setChecked(true);
         }
-        if ("1".equals(spPhone.getString("isZDDR", "0"))) {
+        if ("1".equals(spPhone.getString("autologin", "0"))) {
             zddrCheckBox.setChecked(true);
         }
 
@@ -133,9 +133,9 @@ public class SystemSetingActivity extends Activity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Editor editor = spPhone.edit();
                 if (isChecked) {
-                    editor.putString("isJZMM", "1");
+                    editor.putString("rembernp", "1");
                 } else {
-                    editor.putString("isJZMM", "0");
+                    editor.putString("rembernp", "0");
                 }
                 editor.commit();
             }
@@ -146,9 +146,9 @@ public class SystemSetingActivity extends Activity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Editor editor = spPhone.edit();
                 if (isChecked) {
-                    editor.putString("isZDDR", "1");
+                    editor.putString("autologin", "1");
                 } else {
-                    editor.putString("isZDDR", "0");
+                    editor.putString("autologin", "0");
                 }
                 editor.commit();
             }
@@ -195,42 +195,6 @@ public class SystemSetingActivity extends Activity {
         SharedPreferences sp = getSharedPreferences("PageSize", MODE_PRIVATE);
         country.setCurrentItem(Integer.parseInt(sp.getString("pagesize", "15")) - 10);
 
-        // /**
-        // * 定时时长设置（s） 默认120
-        // */
-        // final WheelView country_gps_time = (WheelView)
-        // findViewById(R.id.country_gps_time);
-        // ArrayList list_gps_time = new ArrayList();
-        // for (int i = 10; i < 600; i++) {
-        // list_gps_time.add(i + "");
-        // }
-        // country_gps_time.setVisibleItems(3);
-        // country_gps_time.setViewAdapter(new CountryAdapter(this,
-        // list_gps_time));
-        // country_gps_time.addScrollingListener(new OnWheelScrollListener() {
-        // public void onScrollingStarted(WheelView wheel) {
-        // // System.out.println("addScrollingListener");
-        // }
-        //
-        // public void onScrollingFinished(WheelView wheel) {
-        // // System.out.println("onScrollingFinished");
-        // SharedPreferences sp_gps_time = getSharedPreferences("GPS_TRACK",
-        // MODE_PRIVATE);
-        // Editor editor = sp_gps_time.edit();
-        // editor.putString("TIME", gps_time_temp);
-        // editor.commit();
-        // }
-        // });
-        // country_gps_time.addChangingListener(new OnWheelChangedListener() {
-        // public void onChanged(WheelView wheel, int oldValue, int newValue) {
-        // gps_time_temp = "" + (newValue + 120);
-        // }
-        // });
-        // SharedPreferences sp_gps_time = getSharedPreferences("GPS_TRACK",
-        // MODE_PRIVATE);
-        // country_gps_time.setCurrentItem(Integer.parseInt(sp_gps_time.getString("TIME",
-        // "120")) - 10);
-
     }
 
     /**
@@ -260,8 +224,6 @@ public class SystemSetingActivity extends Activity {
             public void run() {
                 Message msg = Message.obtain(); // 比new一个对象好 相当于创建消息对象 
                 try {
-                    // URL url=new
-                    // URL(getResources().getString(R.string.url)+"update.xml");
                     URL url = new URL(HttpUtil.getPCURL() + HttpUtil.getVersionXML());
                     HttpURLConnection conn;
                     conn = (HttpURLConnection) url.openConnection();

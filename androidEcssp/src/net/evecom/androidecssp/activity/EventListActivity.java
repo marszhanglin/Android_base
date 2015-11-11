@@ -1,7 +1,6 @@
 package net.evecom.androidecssp.activity;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 
 import net.evecom.androidecssp.R;
@@ -60,7 +59,7 @@ public class EventListActivity extends BaseActivity {
 				Message message= new Message();
 				
 				try {
-					resutArray=connServerForResultPost("jfs/mobile/androidIndex/getEnentList", null);
+					resutArray=connServerForResultPost("jfs/ecssp/mobile/eventCtr/getEnentList", null);
 				} catch (ClientProtocolException e) {
 					message.what=MESSAGETYPE_02;
 					Log.e("mars", e.getMessage());
