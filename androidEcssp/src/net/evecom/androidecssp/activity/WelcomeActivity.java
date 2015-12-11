@@ -1,18 +1,20 @@
+/*
+ * Copyright (c) 2005, 2014, EVECOM Technology Co.,Ltd. All rights reserved.
+ * EVECOM PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+ * 
+ */
 package net.evecom.androidecssp.activity;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import net.evecom.androidecssp.R;
 import net.evecom.androidecssp.base.BaseActivity;
 import net.evecom.androidecssp.base.BaseModel;
 import net.evecom.androidecssp.base.ICallback;
 import net.evecom.androidecssp.bean.SysDictBean;
-import net.evecom.androidecssp.util.HttpUtil;
-import net.evecom.androidecssp.util.PhoneUtil;
 import net.evecom.androidecssp.util.ShareUtil;
 import net.evecom.androidecssp.util.UiUtil;
 import net.evecom.androidecssp.util.entryption.EncryptUtil;
@@ -43,6 +45,12 @@ import com.tianditu.android.maps.GeoPoint;
 import com.tianditu.android.maps.MapView;
 import com.tianditu.android.maps.MyLocationOverlay;
 
+/**
+ * 
+ * 描述  WelcomeActivity
+ * @author Mars zhang
+ * @created 2015-11-12 上午10:16:20
+ */
 public class WelcomeActivity extends BaseActivity {
     /** 用户名EditText */
     private EditText userNmaeEditText;

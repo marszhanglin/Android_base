@@ -1,7 +1,10 @@
+/*
+ * Copyright (c) 2005, 2014, EVECOM Technology Co.,Ltd. All rights reserved.
+ * EVECOM PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+ * 
+ */
 package net.evecom.androidecssp.activity;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,13 +19,9 @@ import net.evecom.androidecssp.base.ICallback;
 import net.evecom.androidecssp.base.UploadPictureActivity;
 import net.evecom.androidecssp.bean.FileManageBean;
 import net.evecom.androidecssp.bean.TaskResponseInfo;
-import net.evecom.androidecssp.util.HttpUtil;
 import net.evecom.androidecssp.util.ShareUtil;
 import net.evecom.androidecssp.util.UiUtil;
 import net.tsz.afinal.FinalDb;
-import net.tsz.afinal.FinalHttp;
-import net.tsz.afinal.http.AjaxCallBack;
-import net.tsz.afinal.http.AjaxParams;
 
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
@@ -45,13 +44,12 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
- * 添加任务反馈
  * 
- * @author EVECOM-PC
- * 
+ * 描述 添加任务反馈
+ * @author Mars zhang
+ * @created 2015-11-12 上午10:15:43
  */
 public class TaskResponseAddActivity extends BaseActivity {
 
@@ -348,55 +346,7 @@ public class TaskResponseAddActivity extends BaseActivity {
 		taskResponseInfo.setId(jsonObject.getString("id"));
 		taskResponseInfo.setResponsetitle("responsetitle");
 		return taskResponseInfo;
-	}
-
-	/**
-	 * 上传图片
-	 * 
-	 * @param taskresponseId
-	 *//*
-	private void postImage(String taskresponseId) {
-		if (null == taskresponseId || taskresponseId.length() < 1) {
-			return;
-		}
-		if(null==fileList||fileList.size()==0){
-			return;
-		}
-		AjaxParams params = new AjaxParams();
-		params.put("taskresponseId", taskresponseId);
-		for (int i = 0; i < fileList.size(); i++) {
-			try {
-				params.put("file" + i, new File(fileList.get(i).getFile_URL()));
-			} catch (FileNotFoundException e) {
-				if (null != e) {
-					e.printStackTrace();
-				}
-			} // 上传文件
-		}
-		FinalHttp fh = new FinalHttp();
-		fh.post(HttpUtil.getPCURL()
-				+ "jfs/mobile/androidIndex/taskResponseFileSave", params,
-				new AjaxCallBack<String>() {
-					@Override
-					public void onLoading(long count, long current) {
-						Log.v("mars", current + "/" + count);
-					}
-
-					@Override
-					public void onFailure(Throwable t, int errorNo,
-							String strMsg) {
-						Toast.makeText(getApplicationContext(),
-								"图片保存失败，请检查网络是否可用", 0).show();
-						super.onFailure(t, errorNo, strMsg);
-					}
-
-					@Override
-					public void onSuccess(String t) {
-						super.onSuccess(t);
-						Log.v("mars", "反馈文件上传成功:"+t);
-					}
-				});
-	}*/
+	} 
 
 	/**
 	 * 消息处理机制
@@ -407,9 +357,9 @@ public class TaskResponseAddActivity extends BaseActivity {
 			case MESSAGETYPE_01:// 文本保存成功 跳转至反馈列表 并提交图片资源
 				Intent intent = new Intent(getApplicationContext(),
 						ResponseListActivity.class);
-				intent.putExtra("eventInfo", eventInfo);
-				intent.putExtra("projectInfo", projectInfo);
-				intent.putExtra("taskInfo", taskInfo);
+				ResponseListActivity.pushData("eventInfo", eventInfo, intent);
+				ResponseListActivity.pushData("projectInfo", projectInfo, intent);
+				ResponseListActivity.pushData("taskInfo", taskInfo, intent);
 				startActivity(intent);
 				finish();
 				break;

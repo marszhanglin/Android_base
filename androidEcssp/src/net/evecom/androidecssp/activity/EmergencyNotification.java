@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2005, 2014, EVECOM Technology Co.,Ltd. All rights reserved.
+ * EVECOM PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+ * 
+ */
 package net.evecom.androidecssp.activity;
 
 import java.util.ArrayList;
@@ -15,7 +20,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
-
+/**
+ * 
+ * √Ë ˆ EmergencyNotification
+ * @author Mars zhang
+ * @created 2015-11-12 …œŒÁ10:13:00
+ */
 public class EmergencyNotification extends BaseActivity {
 	private ViewPager viewpager;
 	private int[] imagesId={R.drawable.emergency_info_3,

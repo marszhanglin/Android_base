@@ -54,10 +54,9 @@ import android.widget.Toast;
 
 /**
  * 
- * 2014-7-22下午3:48:02 类SystemSetingActivity
- * 
+ * 描述 设置界面
  * @author Mars zhang
- * 
+ * @created 2015-11-12 上午10:14:56
  */
 public class SystemSetingActivity extends Activity {
     /** 成员变量 */

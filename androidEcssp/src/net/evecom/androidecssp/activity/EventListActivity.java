@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2005, 2014, EVECOM Technology Co.,Ltd. All rights reserved.
+ * EVECOM PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+ * 
+ */
 package net.evecom.androidecssp.activity;
 
 import java.io.IOException;
@@ -24,9 +29,10 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 /**
- * 事件列表
- * @author EVECOM-PC 
- *
+ * 
+ * 描述  事件列表
+ * @author Mars zhang
+ * @created 2015-11-12 上午10:13:27
  */
 public class EventListActivity extends BaseActivity {
 
