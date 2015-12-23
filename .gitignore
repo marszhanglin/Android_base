@@ -43,3 +43,7 @@ Temporary Items
 .apdisk
 *.class
 *.class
+androidEcssp/.classpath
+androidEcssp/bin/jarlist.cache
+androidEcssp/.classpath
+*.classpath
