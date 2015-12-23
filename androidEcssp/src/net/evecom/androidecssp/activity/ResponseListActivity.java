@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2005, 2014, EVECOM Technology Co.,Ltd. All rights reserved.
+ * EVECOM PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+ * 
+ */
 package net.evecom.androidecssp.activity;
 
 import java.io.IOException;
@@ -8,9 +13,6 @@ import java.util.List;
 import net.evecom.androidecssp.R;
 import net.evecom.androidecssp.base.BaseActivity;
 import net.evecom.androidecssp.base.BaseModel;
-import net.evecom.androidecssp.bean.EventInfo;
-import net.evecom.androidecssp.bean.ProjectInfo;
-import net.evecom.androidecssp.bean.TaskInfo;
 import net.evecom.androidecssp.bean.TaskResponseInfo;
 
 import org.apache.http.client.ClientProtocolException;
@@ -31,10 +33,12 @@ import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
 /**
- * 任务反馈列表
- * @author EVECOM-PC
- *
+ * 
+ * 描述 任务反馈列表
+ * @author Mars zhang
+ * @created 2015-11-12 上午10:14:40
  */
 public class ResponseListActivity extends BaseActivity {
 
@@ -51,7 +55,7 @@ public class ResponseListActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.response_list_at);
 		Intent intent=getIntent();
-		eventInfo=(BaseModel) getData("", intent);
+		eventInfo=(BaseModel) getData("eventInfo", intent);
 		projectInfo=(BaseModel) getData("projectInfo", intent);
 		taskInfo=(BaseModel) getData("taskInfo", intent);
 		init();
@@ -71,9 +75,9 @@ public class ResponseListActivity extends BaseActivity {
 			public void run() {
 				Message message= new Message();
 				HashMap<String, String> hashMap=new HashMap<String, String>();
-                hashMap.put("taskId", taskInfo.get("Id").toString());
+                hashMap.put("taskId", taskInfo.get("id").toString());
 				try {
-					resutArray=connServerForResultPost("jfs/mobile/androidIndex/getTaskResponseByTaskId",
+					resutArray=connServerForResultPost("jfs/ecssp/mobile/taskresponseCtr/getTaskResponseByTaskId",
 					        hashMap);
 				} catch (ClientProtocolException e) {
 					message.what=MESSAGETYPE_02;

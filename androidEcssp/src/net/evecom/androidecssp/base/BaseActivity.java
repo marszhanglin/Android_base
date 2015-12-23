@@ -1,5 +1,7 @@
 package net.evecom.androidecssp.base;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -8,10 +10,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
+import java.util.UUID;
 
 import net.evecom.androidecssp.R;
+import net.evecom.androidecssp.bean.FileManageBean;
 import net.evecom.androidecssp.util.HttpUtil;
+import net.evecom.androidecssp.util.PhoneUtil;
+import net.evecom.androidecssp.util.ShareUtil;
+import net.tsz.afinal.FinalHttp;
+import net.tsz.afinal.http.AjaxCallBack;
+import net.tsz.afinal.http.AjaxParams;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -31,10 +39,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 /**
  *  基础的Activity类
@@ -57,7 +66,9 @@ public class BaseActivity extends Activity {
     /** 数据状态 */
     protected static final int MESSAGETYPE_06 = 0x0006;
     /** 自定义交互数据集 */
-    public static HashMap<Long, Object> contextHashMap = new HashMap<Long, Object>(); 
+    public static HashMap<Long, Object> contextHashMap = new HashMap<Long, Object>();
+    /** 实体对象 */
+    public static BaseActivity instance = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -66,8 +77,7 @@ public class BaseActivity extends Activity {
 				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		//不要标题
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		
-		
+		instance=this;
 	}
 	
 	
@@ -113,13 +123,6 @@ public class BaseActivity extends Activity {
         });
         builder1.show();
     }
-    /*DialogToast("aasdasdasd",new ICallback() { 
-		@Override
-		public Object execute() {
-			toast("回调了", 1);
-			return null;
-		}
-	});*/
     
     
     /** 土司 */
@@ -172,6 +175,14 @@ public class BaseActivity extends Activity {
         if(null==entityMap){
             entityMap = new HashMap<String, String>();
         } 
+        String code=ShareUtil.getString(instance, "PASSNAME", "code", "");
+//        code = code.replace("+", "%2B");
+        if(code.length()>0){
+            entityMap.put("sys_code", code);
+        }
+        entityMap.put("sys_imei", PhoneUtil.getInstance().getImei(instance));
+        entityMap.put("sys_loginName", ShareUtil.getString(instance, "PASSNAME", "username", ""));
+        
         Object[] entityKeys = entityMap.keySet().toArray();
         for(int i=0;i<entityKeys.length;i++){
             String key=(String) entityKeys[i];
@@ -182,8 +193,8 @@ public class BaseActivity extends Activity {
                 entitySb.append("&"+key+"="+entityMap.get(key));
             }
         }
-        byte[] entity = entitySb.toString().getBytes();
-        
+        byte[] entity = entitySb.toString().getBytes("UTF-8");
+        System.out.println(url.toString()+entitySb.toString());
         conn.setConnectTimeout(5000);
         conn.setDoOutput(true);
         conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
@@ -200,6 +211,67 @@ public class BaseActivity extends Activity {
         }
         return strResult;
     } 
+    
+    
+    /**
+     * 上传图片
+     * 
+     * @param taskresponseId
+     */
+    public void postImage(HashMap<String, String> map,List<FileManageBean> fileList,String requestUrl) {
+        if (null == map ) {
+            return;
+        }
+        if(null==fileList||fileList.size()==0){
+            return;
+        }
+        AjaxParams params = new AjaxParams();
+        Object[]  strings=map.keySet().toArray();
+        for(int i=0;i<strings.length;i++){ 
+            params.put((String) strings[i], map.get(strings[i]));
+        }
+        String code=ShareUtil.getString(instance, "PASSNAME", "code", "");
+//        code = code.replace("+", "%2B");
+//        params.put("sys_code", code);
+//        params.put("sys_imei", PhoneUtil.getInstance().getImei(instance));
+//        params.put("sys_loginName", ShareUtil.getString(instance, "PASSNAME", "username", ""));
+        requestUrl +="?sys_code="+code;
+        requestUrl +="&sys_imei="+PhoneUtil.getInstance().getImei(instance);
+        requestUrl +="&sys_loginName="+ShareUtil.getString(instance, "PASSNAME", "username", "");
+        for (int i = 0; i < fileList.size(); i++) {
+            try {
+                params.put("file" + i, new File(fileList.get(i).getFile_URL()));
+            } catch (FileNotFoundException e) {
+                if (null != e) {
+                    e.printStackTrace();
+                }
+            } // 上传文件
+        }
+        FinalHttp fh = new FinalHttp();
+        fh.post(HttpUtil.getPCURL()
+                + requestUrl, params,
+                new AjaxCallBack<String>() {
+                    @Override
+                    public void onLoading(long count, long current) {
+                        Log.v("mars", current + "/" + count);
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t, int errorNo,
+                            String strMsg) {
+                        Log.v("mars", "文件保存失败，请检查网络是否可用" );
+                        super.onFailure(t, errorNo, strMsg);
+                    }
+
+                    @Override
+                    public void onSuccess(String t) {
+                        super.onSuccess(t);
+                        Log.v("mars", "文件上传成功:"+t);
+                    }
+                });
+    }
+    
+    
     
     public void fh(View view){
     	this.finish();
@@ -223,7 +295,6 @@ public class BaseActivity extends Activity {
     }
     
     
-     
     
     /**
      * 解析 json数组据 成baseModel
@@ -250,7 +321,8 @@ public class BaseActivity extends Activity {
      * 
      */
     public static   Intent pushData(String string,BaseModel baseModel,Intent intent){
-        Long key = SystemClock.elapsedRealtime();
+//        Long key = SystemClock.elapsedRealtime();
+        Long key = (long) UUID.randomUUID().hashCode();
         intent.putExtra(string, key);
         contextHashMap.put(key, baseModel);
         return intent;
@@ -264,6 +336,15 @@ public class BaseActivity extends Activity {
         Long key = intent.getLongExtra(string, 0L);
         return contextHashMap.get(key);
     }
+    /**
+     * 
+     * 描述 展示图片
+     * @author Mars zhang
+     * @created 2015-11-9 下午3:05:16
+     */
+    public void displayImage(ImageView imageView,String uriStr){
+        BaseApplication.instence.finalbitmap.display(imageView, uriStr);
+    }
     
     /**
      * 要加动画过度动画  所以要重写finish方法
@@ -271,7 +352,7 @@ public class BaseActivity extends Activity {
     @Override
     public void finish(){
     	super.finish();
-    	overridePendingTransition(R.anim.activity_in_heart , R.anim.activity_out_heart);
+//    	overridePendingTransition(R.anim.activity_in_heart , R.anim.activity_out_heart);
     } 
     
     /**
@@ -280,6 +361,11 @@ public class BaseActivity extends Activity {
 	@Override
 	public void startActivity(Intent intent) {
 		super.startActivity(intent);
-		overridePendingTransition(R.anim.activity_in_heart , R.anim.activity_out_heart);
+//		overridePendingTransition(R.anim.activity_in_heart , R.anim.activity_out_heart);
+	
 	}  
+	
+	
+	
+	
 }

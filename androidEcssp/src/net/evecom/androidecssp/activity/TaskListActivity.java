@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2005, 2014, EVECOM Technology Co.,Ltd. All rights reserved.
+ * EVECOM PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+ * 
+ */
 package net.evecom.androidecssp.activity;
 
 import java.io.IOException;
@@ -32,9 +37,10 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 /**
- * 任务列表
- * @author EVECOM-PC
- *
+ * 
+ * 描述 TaskListActivity
+ * @author Mars zhang
+ * @created 2015-11-12 上午10:12:38
  */
 public class TaskListActivity extends BaseActivity {
 
@@ -50,7 +56,7 @@ public class TaskListActivity extends BaseActivity {
 		setContentView(R.layout.task_list_at);
 		Intent intent=getIntent();
 		eventInfo=(BaseModel) getData("eventInfo", intent);
-		projectInfo=(BaseModel) getData("eventInfo", intent);
+		projectInfo=(BaseModel) getData("projectInfo", intent);
 		
 		init();
 	}
@@ -73,7 +79,8 @@ public class TaskListActivity extends BaseActivity {
 				    HashMap<String, String> hashMap=new HashMap<String, String>();
                     hashMap.put("eventId", eventInfo.get("id").toString());
                     hashMap.put("projectId", projectInfo.get("id").toString());
-					resutArray=connServerForResultPost("jfs/mobile/androidIndex/getTaskByEventIdAndProjectId",
+                    System.out.println(hashMap.values().toArray().toString());
+					resutArray=connServerForResultPost("jfs/ecssp/mobile/taskresponseCtr/getTaskByEventIdAndProjectId",
 					        hashMap);
 				} catch (ClientProtocolException e) {
 					message.what=MESSAGETYPE_02;

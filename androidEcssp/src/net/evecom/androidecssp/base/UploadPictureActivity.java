@@ -6,9 +6,6 @@
 package net.evecom.androidecssp.base;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -16,7 +13,6 @@ import net.evecom.androidecssp.R;
 import net.evecom.androidecssp.util.FileUtils;
 import net.tsz.afinal.FinalBitmap;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
@@ -25,7 +21,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -33,7 +28,6 @@ import android.provider.MediaStore;
 import android.provider.MediaStore.Video.Media;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -45,7 +39,7 @@ import android.widget.Toast;
  * @author Mars zhang
  * 
  */
-public class UploadPictureActivity extends Activity {
+public class UploadPictureActivity extends BaseActivity {
     /** 成员变量 */
     private String strImgPath = "";// 照片文件绝对路径
     /** 成员变量 */
@@ -72,8 +66,6 @@ public class UploadPictureActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.uploadpictrue);
-        // 启动activity时不自动弹出软键盘
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         // 获取事件列表传来的数据
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
@@ -210,9 +202,7 @@ public class UploadPictureActivity extends Activity {
                     Editor editor = sp.edit();
                     editor.putString("fileName", path);
                     editor.commit();
-                    // imageView.setImageURI(uri); //1
-                    FinalBitmap fb = FinalBitmap.create(this);
-                    fb.display(imageView, path);
+                    displayImage(imageView, path);
                 }
 
                 break;

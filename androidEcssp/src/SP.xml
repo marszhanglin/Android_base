@@ -14,14 +14,10 @@
     <StringDoc>用户名</StringDoc>
     </get>
     <get>
-    <String>password</String>
-    <StringDoc>密码</StringDoc>
-    </get>
-        <get>
     <String>userid</String>
     <StringDoc>用户id</StringDoc>
     </get>
-        <get>
+    <get>
     <String>usernameCN</String>
     <StringDoc>用户中文名</StringDoc>
     </get>
@@ -37,32 +33,17 @@
     <String>orgid</String>
     <StringDoc>组织机构id</StringDoc>
     </get>
-        <get>
+    <get>
     <String>orgname</String>
     <StringDoc>组织机构名称</StringDoc>
     </get>
-       <get>
-    <String>Latitude</String>
-    <StringDoc>经度</StringDoc>
-    </get>
-       <get>
-    <String>Longitude</String>
-    <StringDoc>纬度</StringDoc>
-    </get>
+    <get>
+    <String>code</String>
+    <StringDoc>用户请求码</StringDoc>
+    </get>    
         
         
-    <map>
-    <string name="mobile_In_clound">13850159482</string>
-    <string name="usernameCN">超级管理员</string>
-    <string name="sex">男</string>
-    <string name="rembernp">1</string>
-    <string name="username">sysadmin</string>
-    <string name="orgid">root</string>
-    <string name="orgname">福建省政府</string>
-    <string name="userid">a382eba16e9a41f9b7377ad760215357</string>
-    <string name="autologin">1</string>
-    <string name="password">888888</string>
-</map> 
+
 </item>
 
 
@@ -78,3 +59,18 @@
     <StringDoc>118.1 y</StringDoc>
     </get>
 </item>
+
+
+<map>
+    <string name="mobile_In_clound">13850159482</string>
+    <string name="usernameCN">超级管理员</string>
+    <string name="sex">男</string>
+    <string name="rembernp">1</string>
+    <string name="username">sysadmin</string>
+    <string name="orgid">root</string>
+    <string name="orgname">福建省政府</string>
+    <string name="userid">a382eba16e9a41f9b7377ad760215357</string>
+    <string name="autologin">1</string>
+    <string name="password">888888</string>
+    <string name="code">wszt5QCZf6btj23BXnKLe5P3qgicIGCSVaKYsoBJsUCq\/1dyqvw9A0CctKjYLh4B</string>
+</map> 

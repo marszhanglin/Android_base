@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2005, 2014, EVECOM Technology Co.,Ltd. All rights reserved.
+ * EVECOM PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+ * 
+ */
 package net.evecom.androidecssp.activity;
 
 import java.io.IOException;
@@ -30,9 +35,10 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 /**
- * 处置项目列表
- * @author EVECOM-PC
- *
+ * 
+ * 描述 处置项目列表
+ * @author Mars zhang
+ * @created 2015-11-11 下午2:28:25
  */
 public class ProjectListActivity extends BaseActivity {
 
@@ -68,7 +74,7 @@ public class ProjectListActivity extends BaseActivity {
 				try {
 				    HashMap<String, String> hashMap=new HashMap<String, String>();
 				    hashMap.put("eventId", eventInfo.get("id").toString());
-					resutArray=connServerForResultPost("jfs/mobile/androidIndex/getAllProjectByeventId", hashMap);
+					resutArray=connServerForResultPost("jfs/ecssp/mobile/taskresponseCtr/getAllProjectByeventId", hashMap);
 				} catch (ClientProtocolException e) {
 					message.what=MESSAGETYPE_02;
 					Log.e("mars", e.getMessage());

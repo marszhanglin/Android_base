@@ -1,17 +1,20 @@
+/*
+ * Copyright (c) 2005, 2014, EVECOM Technology Co.,Ltd. All rights reserved.
+ * EVECOM PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+ * 
+ */
 package net.evecom.androidecssp.activity;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import net.evecom.androidecssp.R;
 import net.evecom.androidecssp.base.BaseActivity;
+import net.evecom.androidecssp.base.BaseModel;
 import net.evecom.androidecssp.base.ICallback;
 import net.evecom.androidecssp.bean.SysDictBean;
-import net.evecom.androidecssp.util.HttpUtil;
-import net.evecom.androidecssp.util.PhoneUtil;
 import net.evecom.androidecssp.util.ShareUtil;
 import net.evecom.androidecssp.util.UiUtil;
 import net.evecom.androidecssp.util.entryption.EncryptUtil;
@@ -42,6 +45,12 @@ import com.tianditu.android.maps.GeoPoint;
 import com.tianditu.android.maps.MapView;
 import com.tianditu.android.maps.MyLocationOverlay;
 
+/**
+ * 
+ * 描述  WelcomeActivity
+ * @author Mars zhang
+ * @created 2015-11-12 上午10:16:20
+ */
 public class WelcomeActivity extends BaseActivity {
     /** 用户名EditText */
     private EditText userNmaeEditText;
@@ -89,19 +98,16 @@ public class WelcomeActivity extends BaseActivity {
 	 * app数据初始化
 	 */
 	private void initdata() {
-//		manageGis();
-		long s=System.currentTimeMillis();
 		db=FinalDb.create(this);
 		List<SysDictBean> list=db.findAll(SysDictBean.class);
-		Log.v("mars", list.size()+"findAll__"+(System.currentTimeMillis()-s)/1000+"秒");
 		//数据库有数据时不请求
 		if(null!=list&&list.size()>0){
 			return ;
 		}
 		db.deleteAll(SysDictBean.class);
 		//获取数据字典数据
-		getDictSave2SqlData();
 		
+		getDictSave2SqlData();
 	}
 	
 	/**
@@ -309,10 +315,15 @@ public class WelcomeActivity extends BaseActivity {
 			return ;
 		}
 		
+		/** 保存登录名 */
+		final Editor editor= passnameSp.edit();
+        editor.putString("username", username);
+        editor.putString("password", password);
+		editor.commit();
+		
 		//打开进度条
 		loginProgressDialog = ProgressDialog.show(this, "提示", "正在登入，请稍等...");
 		loginProgressDialog.setCancelable(true);
-		Log.v("mars", username+"/"+password);//加密
 		
 		
 		
@@ -326,30 +337,45 @@ public class WelcomeActivity extends BaseActivity {
 					//登陆线程通信实体  在线程中创建
 					Message loginMessage=new Message();
 					HashMap<String, String> hashMap=new HashMap<String, String>();
-			        hashMap.put("username",username);
-			        hashMap.put("password",password.trim());
-			        hashMap.put("imei",PhoneUtil.getInstance().getImei(getApplicationContext()));
-					loginResult = connServerForResultPost("jfs/mobile/androidIndex/login",
+			        hashMap.put("pwd",password.trim());
+					loginResult = connServerForResultPost("jfs/ecssp/mobile/accessCtr/login",
 							hashMap);
 					
 					//如果接受到返回数据 否则消息提示
-					if(loginResult.length()>5){
-						//如果登陆成功跳转  否则消息提示
-						if(loginResult.substring(0, 5).equals("true@")){
-							loginMessage.what=MESSAGETYPE_01;//成功登陆
-						}else{
-							loginMessage.what=MESSAGETYPE_02;//登陆失败 有接收到数据
-						}
+					if(loginResult.length()>0){
+					    try {
+                            BaseModel resultObj=getObjInfo(loginResult);
+                            Boolean success=resultObj.get("sys_success");
+                            if(null!=success&&success){
+                                loginMessage.what=MESSAGETYPE_01;//成功登陆 
+                                BaseModel organization=getObjInfo(resultObj.get("organization").toString());
+                                BaseModel userdata=getObjInfo(resultObj.get("userdata").toString());
+                                BaseModel userInfo=getObjInfo(resultObj.get("userInfo").toString());
+                                String code=resultObj.get("code").toString();
+                                        //存储数据--用户名，密码
+                                        String username=userNmaeEditText.getText().toString();
+                                        editor.putString("username", userdata.getStr("loginname"));
+                                        editor.putString("userid", userdata.getStr("id")); 
+                                        editor.putString("usernameCN", userInfo.getStr("name")); 
+                                        editor.putString("sex", userInfo.get("sex")+""); 
+                                        editor.putString("mobile_In_clound", userInfo.get("mobile")+""); 
+                                        editor.putString("orgid", organization.getStr("id")); 
+                                        editor.putString("orgname",organization.getStr("name"));  
+                                        editor.putString("code",code);
+                                        editor.commit();  
+                            } else{
+                                loginMessage.what=MESSAGETYPE_02;//登陆失败 有接收到数据
+                            }
+                        } catch (JSONException e) {
+                            loginMessage.what=MESSAGETYPE_02;//登陆失败 有接收到数据
+                        } 
 					}else{
 						loginMessage.what=MESSAGETYPE_03;//登陆失败  没有接收到数据
 					}
 					loginRequestHandler.sendMessage(loginMessage);
 					
-					Log.v("mars", "WelcomeActivity@loginResult:"+loginResult+PhoneUtil.getInstance().getImei(getApplicationContext()));
 				} catch (ClientProtocolException e) {
-					Log.v("mars", "WelcomeActivity:"+e.getMessage());
 				} catch (IOException e) {
-					Log.v("mars", "WelcomeActivity:"+e.getMessage());
 				}
 			}
 		}).start(); 
@@ -369,27 +395,6 @@ public class WelcomeActivity extends BaseActivity {
 				if (null != loginProgressDialog) {
 					loginProgressDialog.dismiss();
                 }
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						//存储数据--用户名，密码
-						String username=userNmaeEditText.getText().toString();
-						String password=passwordEditText.getText().toString();
-						editor.putString("username", username);
-						editor.putString("password", password);
-						
-						//分割存储--user org
-						String[] loginResults = Pattern.compile(HttpUtil.DELIMITER).split(loginResult);
-						editor.putString("userid", loginResults[1]); 
-						editor.putString("usernameCN", loginResults[2]); 
-						editor.putString("sex", loginResults[3]); 
-						editor.putString("mobile_In_clound", loginResults[4]); 
-						editor.putString("orgid", loginResults[5]); 
-						editor.putString("orgname", loginResults[6]);  
-						editor.commit();  
-					}
-				}).start();
-				
 				
 				Intent intent = new Intent();
 			    intent.setClass(WelcomeActivity.this, MainMenuActivity.class);
@@ -406,7 +411,6 @@ public class WelcomeActivity extends BaseActivity {
 					@Override
 					public Object execute() { 
 						loginResult="";
-						toast("ok", 1);
 						return null;
 					}
 				});

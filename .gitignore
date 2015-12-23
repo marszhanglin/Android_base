@@ -42,8 +42,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 *.class
+*.class 
 *.class
-androidEcssp/.classpath
-androidEcssp/bin/jarlist.cache
-androidEcssp/.classpath
-*.classpath
+*.apk 

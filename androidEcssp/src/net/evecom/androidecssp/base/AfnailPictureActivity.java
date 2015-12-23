@@ -7,14 +7,11 @@ package net.evecom.androidecssp.base;
 
 import net.evecom.androidecssp.R;
 import net.evecom.androidecssp.bean.FileManageBean;
-import net.tsz.afinal.FinalBitmap;
 import net.tsz.afinal.FinalDb;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 
 /**
@@ -24,11 +21,9 @@ import android.widget.ImageView;
  * @author Mars zhang
  * 
  */
-public class AfnailPictureActivity extends Activity {
+public class AfnailPictureActivity extends BaseActivity {
     /** MemberVariables */
     private ImageView imageView;
-    /** MemberVariables */
-    private FinalBitmap fb;
     /** MemberVariables */
     private String URI;
     /** 文件File_Id */
@@ -41,13 +36,11 @@ public class AfnailPictureActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.afnail_picture_activity);
         // 启动activity时不自动弹出软键盘
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         imageView = (ImageView) findViewById(R.id.test1_picture);
         Intent intent = getIntent();
         URI = intent.getStringExtra("URI");
         File_Id = intent.getIntExtra("File_Id", -1);
-        fb = FinalBitmap.create(this);
-        fb.display(imageView, URI);
+        displayImage(imageView,URI);
     }
 
     /**
